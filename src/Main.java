@@ -45,5 +45,12 @@ public class Main{
         System.out.println("5. Sair");
         System.out.println("==================================================");
     }
+    private static void exibirSobre() {
+        System.out.println("\n--- SOBRE O JOGO ---");
+        System.out.println("Um suspense interativo baseado em texto.");
+        System.out.println("Explore a cabana abandonada e descubra a verdade sobre os acontecimentos de 1984.");
+        System.out.println("Desenvolvido em Java (MVP).");
+        System.out.println("\nPressione ENTER para voltar ao menu...");
+        scanner.nextLine();
     }
 }
