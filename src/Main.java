@@ -22,7 +22,7 @@ public class Main{
                     configuracaoJogo();
                     break;
                 case "4":
-                    sobreJogo();
+                    exibirSobre();
                     break;
                 case "5":
                     System.out.println("\nSaindo do jogo... Até a próxima!");
