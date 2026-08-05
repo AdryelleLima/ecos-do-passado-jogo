@@ -29,8 +29,8 @@ public class Jogador{
     public boolean removeItem(Item item){
         return inventario.remove(item);
     }
-    // Busca um item no inventário pelo nome digitado
-    public Item buscarItemNoInventario(nomeItem){
+     // Busca um item no inventário pelo nome digitado
+    public Item buscarItemNoInventario(String nomeItem){
         for(Item item : inventario){
             if(item.pegarNome().equalsIgnoreCase(nomeItem)){
                 return item;
@@ -40,7 +40,7 @@ public class Jogador{
     }
     
     // verifica se o jogador possui determinado item pelo nome
-    public boolean possuiItem(Item nomeItem){
+    public boolean possuiItem(String nomeItem){
         return buscarItemNoInventario(nomeItem) != null;
     }
 
