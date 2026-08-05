@@ -7,7 +7,7 @@ public class Jogador{
     private List <Item> inventario; // Guarda objetos da classe Item!
 
     // Construtor
-    public Jogador(String nome, Sala salaIncial){
+    public Jogador(String nome, Sala salaInicial){
         this.nome = nome;
         this.salaAtual = salaInicial;
         this.inventario = new ArrayList<>();
