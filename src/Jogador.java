@@ -2,13 +2,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Jogador{
-    private String nomeJ;
+    private String nome;
     private Sala salaAtual;
-    private List <String> inventario;
+    private List <Item> inventario; // Guarda objetos da classe Item!
 
     // Construtor
-    public Jogador(String nomeJ, Sala salaIncial){
-        this.nomeJ = nomeJ;
+    public Jogador(String nome, Sala salaIncial){
+        this.nome = nome;
         this.salaAtual = salaInicial;
         this.inventario = new ArrayList<>();
     }
@@ -22,15 +22,26 @@ public class Jogador{
     }
     
     // Médoto do inventario
-    public void adicionarItem(String item){
+    public void adicionarItem(Item item){
         inventario.add(item);
-        System.out.println("--> Item adicionado ao inventário: " + item);
+        System.out.println("--> Item adicionado ao inventário: " + item.pegarNome());
     }
-    public boolean removeItem(String item){
+    public boolean removeItem(Item item){
         return inventario.remove(item);
     }
-    public boolean possuiItem(String item){
-        return inventario.contains(item);
+    // Busca um item no inventário pelo nome digitado
+    public Item buscarItemNoInventario(String nomeItem){
+        for(Item item : inventario){
+            if(item.pegarNome().equalsIgnoreCase(nomeItem)){
+                return item;
+            }
+        }
+        return null; // retorna null se o item não estiver no inventário
+    }
+    
+    // verifica se o jogador possui determinado item pelo nome
+    public boolean possuiItem(Item nomeItem){
+        return buscarItemNoInventario(nomeItem) != null;
     }
 
     public void exibirInventario(){
@@ -39,11 +50,11 @@ public class Jogador{
             System.out.println("Sua mochila está vazia. ");
         }else{
             for(String item : inventario){
-                System.out.println("- " + item);
+                System.out.println("- " + item.pegarNome() + ": " + item.pegarDescricao());
             }
         }
     }
-    public String pegarNomeJ(){
-        return nomeJ;
+    public String pegarNome(){
+        return nome;
     }
 }
