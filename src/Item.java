@@ -4,7 +4,7 @@ public class Item{
     private boolean coletavel; // true = pode pegar, false = objeto fixo do cenário
 
     // Construtor
-    public Item(String nome, String decricao, boolean coletavel){
+    public Item(String nome, String descricao, boolean coletavel){
         this.nome = nome;
         this.descricao = descricao;
         this.coletavel = coletavel;
