@@ -1,7 +1,7 @@
 import java.util.Arrays;
 import java.util.List;
 
-piblic class Parser {
+public class Parser {
     //Listar/Arrays de Palavras-Chave
     private static final List<String> VERBOS_MOVER = Arrays.asList("ir","caminhar", "andar", "mover", "entrar");
     private static final List<String> VERBOS_EXAMINAR = Arrays.asList("olhar","ver","examinar","observar", "ler", "checar");
@@ -10,9 +10,9 @@ piblic class Parser {
 
     public static Comando analisar(String entrada){
         if(entrada == null || entrada.trim().isEmpty()){
-            return new Comnado("", "");
+            return new Comando("", "");
         }
-        String[] palavra = entrada.toLowerCase().trim().split("\\s+");
+        String[] palavras = entrada.toLowerCase().trim().split("\\s+");
         String acaoIdentificada = "";
         String alvoIdentificado = "";
 
