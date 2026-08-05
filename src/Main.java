@@ -40,7 +40,7 @@ public class Main{
         System.out.println("==================================================");
         System.out.println("1. Continuar Jogo");
         System.out.println("2. Iniciar Novo Jogo");
-        System.out.println("2. Configuração");
+        System.out.println("3. Configuração");
         System.out.println("4. Sobre");
         System.out.println("5. Sair");
         System.out.println("==================================================");
