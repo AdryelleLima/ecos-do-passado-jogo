@@ -18,7 +18,7 @@ public class Sala{
 
     //Define qual sala fica em qual direção
     public void definirSala(String direcao, Sala salaVizinha){
-        saidas.put(direção.toLowerCase(), salaVizinha);
+        saidas.put(direcao.toLowerCase(), salaVizinha);
     }
     public Sala pegarSaida(String direcao){
         return saidas.get(direcao.toLowerCase());
