@@ -19,7 +19,7 @@ public class Main{
                     iniciarNovoJogo();
                     break;
                 case "3":
-                    configuracaoJogo();
+                    Configuracao.menuConfiguracoes(scanner);
                     break;
                 case "4":
                     exibirSobre();
@@ -52,9 +52,6 @@ public class Main{
         System.out.println("Desenvolvido em Java (MVP).");
         System.out.println("\nPressione ENTER para voltar ao menu...");
         scanner.nextLine();
-    }
-     private static void configuracaoJogo(){
-
     }
     private static void iniciarNovoJogo(){
         
