@@ -30,7 +30,7 @@ public class Jogador{
         return inventario.remove(item);
     }
     // Busca um item no inventário pelo nome digitado
-    public Item buscarItemNoInventario(String nomeItem){
+    public Item buscarItemNoInventario(nomeItem){
         for(Item item : inventario){
             if(item.pegarNome().equalsIgnoreCase(nomeItem)){
                 return item;
@@ -49,7 +49,7 @@ public class Jogador{
         if(inventario.isEmpty()){
             System.out.println("Sua mochila está vazia. ");
         }else{
-            for(String item : inventario){
+            for(Item item : inventario){
                 System.out.println("- " + item.pegarNome() + ": " + item.pegarDescricao());
             }
         }
