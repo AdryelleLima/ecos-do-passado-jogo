@@ -53,4 +53,13 @@ public class Main{
         System.out.println("\nPressione ENTER para voltar ao menu...");
         scanner.nextLine();
     }
+     private static void configuracaoJogo(){
+
+    }
+    private static void iniciarNovoJogo(){
+        
+    }
+    private static void continuarJogo(){
+        
+    }
 }
