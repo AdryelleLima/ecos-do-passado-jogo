@@ -57,7 +57,10 @@ public class Main{
         
     }
     private static void continuarJogo(){
-        
+         if (!GerenciadorSave.existeSave()) {
+            System.out.println("\n[!] Nenhum jogo salvo foi encontrado!");
+            return;
+        }  
     }
     // Durante o jogo ou introdução da cena: Configuracao.digitar("A porta principal bateu com força atrás de você e a tranca emperrou!");
 }
