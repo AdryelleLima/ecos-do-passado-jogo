@@ -57,4 +57,8 @@ public class Jogador{
     public String pegarNome(){
         return nome;
     }
+    // Método necessário para o GerenciadorSave ler os itens da mochila
+    public List<Item> pegarInventario() {
+        return inventario;
+    }
 }
