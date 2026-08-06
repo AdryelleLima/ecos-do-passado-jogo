@@ -2,8 +2,11 @@ import java.util.Scanner;
 
 public class Main{
     private static Scanner scanner = new Scanner(System.in);
+    private static Map<String, Sala> mapaSalas = new HashMap<>();
+    private static Map<String, Item> mapaItens = new HashMap<>();
 
     public static void main(String[] args){
+        inicializarMundo(); // Cria as salas e itens do jogo
         boolean noMenu = true;
 
         while(noMenu){
