@@ -48,6 +48,16 @@ public class Main{
         System.out.println("5. Sair");
         System.out.println("==================================================");
     }
+    private static void inicializarMundo(){
+        // Criando Itens
+
+        // Criando Salas
+
+        // Conexões
+
+        // Guardando salas no mapa do jogo
+
+    }
     private static void exibirSobre() {
         System.out.println("\n--- SOBRE O JOGO ---");
         System.out.println("Um suspense interativo baseado em texto.");
@@ -60,10 +70,30 @@ public class Main{
         
     }
     private static void continuarJogo(){
-         if (!GerenciadorSave.existeSave()) {
+      if (!GerenciadorSave.existeSave()) {
             System.out.println("\n[!] Nenhum jogo salvo foi encontrado!");
             return;
         }  
+        String[] dados = GerenciadorSave.carregarDados();
+        String nomeSalaSalva = dados[0];
+
+        Sala salaCarregada = mapaSalas.get(nomeSalaSalva);
+        if (salaCarregada == null){
+            salaCarregada = mapaSalas.get("Sacada da Casa");
+        }
+
+        Jogador jogador = new Jogador(Jogador.nome(), salaCarregada);
+        Configuracao.digitar("\n [Jogo carregado com sucesso! Restaurando progresso... ]");
+        rodarLoopJogo(jogador);
+    }
+    // --- LOOP PRINCIPAL DE GAMEPLAY ---
+    private static void rodarLoopJogo(Jogador jogador) {
+        boolean jogando = true;
+        while (jogando) {
+
+            
+        }
+
     }
     // Durante o jogo ou introdução da cena: Configuracao.digitar("A porta principal bateu com força atrás de você e a tranca emperrou!");
 }
