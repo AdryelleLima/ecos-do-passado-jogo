@@ -59,4 +59,5 @@ public class Main{
     private static void continuarJogo(){
         
     }
+    // Durante o jogo ou introdução da cena: Configuracao.digitar("A porta principal bateu com força atrás de você e a tranca emperrou!");
 }
