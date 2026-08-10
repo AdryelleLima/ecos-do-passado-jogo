@@ -52,10 +52,71 @@ public class Main{
         // Criando Itens
 
         // Criando Salas
+        Sala sacada = new Sala("Sacada","");
+        Sala salaEstar = new Sala("Sala de Estar","");
+        Sala cozinha = new Sala("Cozinha","");
+        Sala banheiro = new Sala("Banheiro","");
+        Sala salaJantar = new Sala("Sala de Jantar","");
+        
+        Sala escada1 = new Sala("Escada 1° andar", "");
+        Sala escada0 = new Sala("Escada do Porão","");
+        
+        Sala porao = new Sala("Porão","");
+
+        Sala hall = new Sala("hall","");
+        Sala quartoMorador = new Sala("Quarto Morador", "");
+        Sala quartoInfantil = new Sala("Quarto Infantil","");
+        Sala escritorio = new Sala("Escritorio","");
+        Sala salaSecreta = new Sala("Sala Secreta", "");
 
         // Conexões
+        sacada.definirSala("norte", salaEstar);
+        
+        salaEstar.definirSala("norte", cozinha);
+        salaEstar.definirSala("leste", salaJantar);
+        salaEstar.definirSala("nordeste", banheiro);
+
+        salaJantar.definirSala("norte", banheiro);
+        salaJantar.definirSala("sudeste", escada1);
+        salaJantar.definirSala("leste",escada0);
+        salaJantar.definirSala("oeste",salaEstar);
+
+        cozinha.definirSala("sul", salaEstar);
+        
+        banheiro.definirSala("sul", salaJantar);
+
+        escada1.definirSala("norte", hall);
+
+        escada0.definirSala("sul",porao);
+
+        hall.definirSala("leste", quartoMorador);
+        hall.definirSala("nordeste", quartoInfantil);
+        hall.definirSala("norte",escritorio);
+
+        quartoMorador.definirSala("sul", hall);
+
+        quartoInfantil.definirSala("sul", hall);
+        
+        escritorio.definirSala("sul",hall);
 
         // Guardando salas no mapa do jogo
+        mapaSalas.put("Sacada da Casa", sacada);
+
+        mapaSalas.put("Sala de Estar", salaEstar);
+        mapaSalas.put("Sala de Jantar", salaJantar);
+        mapaSalas.put("Cozinha", cozinha);
+        mapaSalas.put("Banheiro", banheiro);
+        
+        mapaSalas.put("Escada para 1°", escada1);
+        mapaSalas.put("Escada para Porão", escada0);
+
+        mapaSalas.put("Porão", porao);
+
+        mapaSalas.put("Hall", hall);
+        mapaSalas.put("Quarto do Morador", quartoMorador);
+        mapaSalas.put("Quarto Infantil",quartoInfantil);
+        mapaSalas.put("Escritorio",escritorio);
+        mapaSalas.put("Sala Secreta", salaSecreta);
 
     }
     private static void exibirSobre() {
@@ -67,7 +128,9 @@ public class Main{
         scanner.nextLine();
     }
     private static void iniciarNovoJogo(){
-        
+        Configuracao.digitar("\nIniciando novo jogo...");
+        sJogador jogador = new Jogador("Investigador", mapaSalas.get("Sacada da Casa"));
+        rodarLoopJogo(jogador);
     }
     private static void continuarJogo(){
       if (!GerenciadorSave.existeSave()) {
