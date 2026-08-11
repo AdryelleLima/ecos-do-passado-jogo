@@ -49,8 +49,11 @@ public class Main{
         System.out.println("==================================================");
     }
     private static void inicializarMundo(){
-        // Criando Itens
+        // Criando Itens --- criar e adicionar mais itens
+        Item chavePorao = new Item("Chave do Porão","Uma chave antiga e enferrujada.", true);
 
+        mapaItens.put("chave porão", chavePorao);
+        
         // Criando Salas
         Sala sacada = new Sala("Sacada","");
         Sala salaEstar = new Sala("Sala de Estar","");
@@ -117,7 +120,9 @@ public class Main{
         mapaSalas.put("Quarto Infantil",quartoInfantil);
         mapaSalas.put("Escritorio",escritorio);
         mapaSalas.put("Sala Secreta", salaSecreta);
-
+        
+        // Colocando itens nas Salas --- atualizarei ainda
+        cozinha.conjuntoItemPresente(chavePorao);
     }
     private static void exibirSobre() {
         System.out.println("\n--- SOBRE O JOGO ---");
