@@ -134,7 +134,18 @@ public class Main{
     }
     private static void iniciarNovoJogo(){
         Configuracao.digitar("\nIniciando novo jogo...");
-        sJogador jogador = new Jogador("Investigador", mapaSalas.get("Sacada da Casa"));
+        System.out.println("\n--------------------------------------------------");
+        System.out.print("Digite o seu nome para começar > ");
+        String nomeDigitado = scanner.nextLine().trim();
+
+        if(nomeDigitado.isEmpty()){
+            nomeDigitado = "Investigador"; 
+            // Nome padrão caso o jogador aprete ENTER sem digitar
+        }
+        Configuracao.digitar("\nBem-vindo, " + nomeDigitado + ". Sua investigação começa agora...");
+
+        // Criar o jogador com o nome digitado na sala inicial (sacada)
+        Jogador jogador = new Jogador(nomeDigitado, mapaSalas.get("Sacada da Casa"));
         rodarLoopJogo(jogador);
     }
     private static void continuarJogo(){
@@ -143,25 +154,37 @@ public class Main{
             return;
         }  
         String[] dados = GerenciadorSave.carregarDados();
-        String nomeSalaSalva = dados[0];
+        String nomeJogadorSalvo = dados[0];
+        String nomeSalaSalva = dados[1];
+        String itensSalvos = dados[2];
 
+        // Restaurar Sala
         Sala salaCarregada = mapaSalas.get(nomeSalaSalva);
         if (salaCarregada == null){
             salaCarregada = mapaSalas.get("Sacada da Casa");
         }
-
-        Jogador jogador = new Jogador(Jogador.nome(), salaCarregada);
+        // Recria o jogador com nome gravado no save
+        Jogador jogador = new Jogador(nomeJogadorSalvo, salaCarregada);
+        
+        //Restaura os itens da mochila
+        if (!itensSalvos.isEmpty()){
+            String[] nomesItens = itensSalvos.split(",");
+            for(String nomeItem : nomesItens ){
+                Item item = mapaItens.get(nomeItem.trim().toLowerCase());
+                if(item != null){
+                    jogador.adicionarItem(item);
+                }
+            }
+        }
         Configuracao.digitar("\n [Jogo carregado com sucesso! Restaurando progresso... ]");
+        Configuracao.digitar("\n[Bem-vindo de volta, " + jogador.pegarNome() + "! Jogo carregado com sucesso...]");
         rodarLoopJogo(jogador);
     }
     // --- LOOP PRINCIPAL DE GAMEPLAY ---
     private static void rodarLoopJogo(Jogador jogador) {
         boolean jogando = true;
-        while (jogando) {
-
-            
+        while (jogando) {  
         }
-
     }
     // Durante o jogo ou introdução da cena: Configuracao.digitar("A porta principal bateu com força atrás de você e a tranca emperrou!");
 }
