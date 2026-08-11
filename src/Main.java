@@ -1,3 +1,5 @@
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main{
@@ -49,10 +51,6 @@ public class Main{
         System.out.println("==================================================");
     }
     private static void inicializarMundo(){
-        // Criando Itens --- criar e adicionar mais itens
-        Item chavePorao = new Item("Chave do Porão","Uma chave antiga e enferrujada.", true);
-
-        mapaItens.put("chave porão", chavePorao);
         
         // Criando Salas
         Sala sacada = new Sala("Sacada","");
@@ -118,8 +116,39 @@ public class Main{
         mapaSalas.put("Escritorio",escritorio);
         mapaSalas.put("Sala Secreta", salaSecreta);
         
+        // Criando Itens --- criar e adicionar mais itens
+        // Itens coletaveis
+        Item chavePorao = new Item("Chave do Porão","Uma chave antiga e enferrujada.", true);
+        Item chaveQuartoVisita = new Item("Chave do Quarto de Visita", "Uma chave dourada pequena.", true);
+        Item chaveSaida = new Item("Chave da Saída", "A chave principal da porta da sacada.", true);
+        Item chaveQuartoMorador = new Item("Chave do Quarto do Morador", "Uma chave pequena e desgastada.", true);
+        Item galaoGasolina = new Item("Galão de Gasolina", "Contém combustível suficiente para o gerador.", true);
+        Item pilhas = new Item("Pilhas", "Duas pilhas grandes de 1,5V ainda lacradas.", true);
+        Item gravadorAudio = new Item("Gravador de Áudio", "Um gravador cassete portátil de 1984.", true);
+        Item anotacaoGerador = new Item("Anotações Soltas", "Um pedaço de papel amarelado e dobrado.", true);
+        Item fitaAudio = new Item("Fita Cassete", "Uma fita com a etiqueta 'Registro #04'.", true);
+
+        // Itens fixos (não coletáveis)
+        Item armarioCozinha = new Item("Armário da Cozinha", "Um armário antigo de madeira com portas de vidro opaco.", false);
+        Item gaveteiro = new Item("Gaveteiro", "Um gaveteiro de madeira com gavetas emperradas.", false);
+        
+        // Escondento itens dentro de outros
+        armarioCozinha.esconderItem(chaveQuartoVisita); 
+        gaveteiro.esconderItem(anotacaoGerador);
+
+        // Colocando itens no mapa de itens para acesso rápido
+        // mapaItens.put("chave porão", chavePorao);
+        
         // Colocando itens nas Salas --- atualizarei ainda
-        cozinha.conjuntoItemPresente(chavePorao);
+        cozinha.conjuntoItemPresente(armarioCozinha);
+        salaEstar.conjuntoItemPresente(gaveteiro);
+
+        // Definindo o texto legível do bilhete
+        anotacaoGerador.conjuntoConteudoTexto(
+        "\"O gerador no porão está falhando. Para reativar o circuito da estante,\n" +
+        "é necessário colocar combustível e acionar o interrupter principal.\""
+);
+
     }
     private static void exibirSobre() {
         System.out.println("\n--- SOBRE O JOGO ---");
@@ -180,8 +209,125 @@ public class Main{
     // --- LOOP PRINCIPAL DE GAMEPLAY ---
     private static void rodarLoopJogo(Jogador jogador) {
         boolean jogando = true;
-        while (jogando) {  
+        while (jogando) { 
+             Configuracao.limparTela();
+
+             Sala salaAtual = jogador.pegarSalaAtual();
+
+             // Cabeçalho superior (igual ao monitor CRT da imagem)
+            System.out.println("==================================================");
+            System.out.println("  ECOS DO PASSADO  |  LOCAL: " + salaAtual.pegarNome().toUpperCase());
+            System.out.println("==================================================\n");
+
+            // Descrição do ambiente atual
+            Configuracao.digitar(salaAtual.pegarDescricao());
+
+            if (salaAtual.pegarItemPresente() != null) {
+            System.out.println("\nObservando o local, você nota: " + salaAtual.pegarItemPresente().pegarNome());
+            }
+            System.out.println("\n--------------------------------------------------");
+            System.out.print(":> ");
+            String entrada = scanner.nextLine();
+
+            // Comando direto de salvar a qualquer momento
+            if (entrada.equalsIgnoreCase("salvar")) {
+                GerenciadorSave.salvarJogo(jogador);
+                System.out.println("\n[ Pressione ENTER para continuar... ]");
+                scanner.nextLine();
+                continue;
+            }
+            // Comando direto para abrir a mochila
+            if (entrada.equalsIgnoreCase("inventario")|| entrada.equalsIgnoreCase("mochila")){
+                Configuracao.limparTela();
+                jogador.exibirInventario();
+                System.out.println("\n[ Pressione ENTER para continuar... ]");
+                scanner.nextLine();
+                continue;
+            }
+
+            // Processa os comandos (MOVER, EXAMINAR, PEGAR, etc.)
+            Comando comando = Parser.analisar(entrada);
+            if (!comando.temAcao()) {
+            System.out.println("\nNão entendi o comando. Tente verbos como 'ir', 'examinar', 'pegar', 'mochila' ou 'salvar'.");
+            System.out.println("[ Pressione ENTER para tentar novamente... ]");
+            scanner.nextLine();
+            continue;
+            }
+
+            switch (comando.pegarAcao()) {
+               case "MOVER":
+                Sala proxima = salaAtual.pegarSaida(comando.pegarAlvo());
+                if (proxima != null) {
+                    jogador.conjuntoSalaAtual(proxima);
+                } else {
+                    System.out.println("\nNão há passagem nessa direção!");
+                    System.out.println("[ Pressione ENTER para continuar... ]");
+                    scanner.nextLine();
+                }
+                break;
+
+                case "EXAMINAR":
+                    Configuracao.limparTela();
+                    String alvo = comando.pegarAlvo();
+                    Item itemAlvo = jogador.buscarItemNoInventario(alvo);
+
+                    // Se não está na mochila, procura o item na sala atual
+                    if (itemAlvo == null && salaAtual.pegarItemPresente() != null) {
+                        if (salaAtual.pegarItemPresente().pegarNome().equalsIgnoreCase(alvo)) {
+                            itemAlvo = salaAtual.pegarItemPresente();
+                     }
+                }
+
+                if (itemAlvo != null) {
+                    // Exibe a descrição básica
+                    Configuracao.digitar(itemAlvo.pegarDescricao());
+
+                    // Se possui texto para leitura (cartas, papéis, jornais)
+                    if (itemAlvo.eTextoLendo()) {
+                        System.out.println("\n--- CONTEÚDO DO DOCUMENTO ---");
+                        Configuracao.digitar(itemAlvo.pegarConteudoTexto());
+                        System.out.println("-----------------------------");
+                    }
+
+                    // Se for um móvel com item escondido
+                    if (itemAlvo.temItemEscondido()) {
+                        Item encontrado = itemAlvo.pegarItemEscondido();
+                        Configuracao.digitar("\n[!] Procurando melhor, você encontrou: " + encontrado.pegarNome() + "!");
+                        salaAtual.conjuntoItemPresente(encontrado); // Disponibiliza na sala
+                        itemAlvo.esconderItem(null); // Esvazia o móvel
+                    }
+                } else {
+                    Configuracao.digitar("Você não vê ou não possui esse item para examinar.");
+                }
+
+                System.out.println("\n[ Pressione ENTER para continuar... ]");
+                scanner.nextLine();
+                break;
+
+            case "PEGAR":
+                Item itemNaSala = salaAtual.pegarItemPresente();
+                if (itemNaSala != null && itemNaSala.pegarNome().equalsIgnoreCase(comando.pegarAlvo())) {
+                    if (itemNaSala.eColetavel()) {
+                        jogador.adicionarItem(itemNaSala);
+                        salaAtual.conjuntoItemPresente(null); // Remove da sala
+                    } else {
+                        System.out.println("\nEsse objeto é muito pesado ou está fixo no cenário.");
+                    }
+                } else {
+                    System.out.println("\nNão há esse item disponível para pegar aqui.");
+                }
+
+                System.out.println("\n[ Pressione ENTER para continuar... ]");
+                scanner.nextLine();
+                break;
+
+            case "SAIR":
+                Configuracao.digitar("\nRetornando ao Menu Principal...");
+                jogando = false;
+                break;
+            }
         }
     }
     // Durante o jogo ou introdução da cena: Configuracao.digitar("A porta principal bateu com força atrás de você e a tranca emperrou!");
+    
 }
