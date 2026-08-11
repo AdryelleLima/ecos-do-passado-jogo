@@ -19,15 +19,27 @@ public class GerenciadorSave {
             diretorio.mkdirs();// Cria a pasta saves/ se ela não existir
         }
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(CAMINHO_ARQUIVO))){
-            // Linha 1: Nome da Sala atual
+            // Linha 1: Nome do Jogador
+            writer.write(jogador.pegarNome());
+            writer.newLine();
+
+            // Linha 2: Nome da Sala atual
             writer.write(jogador.pegarSalaAtual().pegarNome());
             writer.newLine();
             
-            // Linha 2 em diante: Itens que o jogador possui no inventário
-            // Os itens serão salvos separados por vírgula
-            StringBuilder itens = new StringBuilder();
+            // Linha 3: Itens que o jogador possui no inventário --- Os itens serão salvos separados por vírgula
+            List<Item> inventario = jogador.pegarInventario();
+            StringBuilder itensString = new StringBuilder();
+            
+            for(int i = 0; i < inventario.size(); i++){
+                itensString.append(inventario.get(i).pegarNome());
+                if(i<inventario.size() - 1){
+                    itensString.append(",");
+                }
+            }
+
             // Acessando os itens para montar a lista
-            writer.write(itens.toString());
+            writer.write(itensString.toString());
             
             Configuracao.digitar("\n [Jogo salvo com sucesso em 'saves/save.txt'!]");
         } catch (IOException e) {
@@ -46,10 +58,14 @@ public class GerenciadorSave {
         if(!existeSave()) return null;
 
         try(BufferedReader reader = new BufferedReader(new FileReader(CAMINHO_ARQUIVO))){
+            String nomeJogador = reader.readLine();
             String nomeSala = reader.readLine();
             String itensSalvos = reader.readLine();
 
-            return new String[]{nomeSala, itensSalvos != null ? itensSalvos : ""};
+            return new String[]{
+                nomeJogador != null ? nomeJogador: "Investigador",
+                nomeSala != null ? nomeSala: "", 
+                itensSalvos != null ? itensSalvos : ""};
         } catch (IOException e) {
             System.out.println("Erro ao carregar o jogo: " + e.getMessage());
             return null;
