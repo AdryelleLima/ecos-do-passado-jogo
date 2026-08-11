@@ -85,11 +85,8 @@ public class Main{
         salaJantar.definirSala("oeste",salaEstar);
 
         cozinha.definirSala("sul", salaEstar);
-        
         banheiro.definirSala("sul", salaJantar);
-
         escada1.definirSala("norte", hall);
-
         escada0.definirSala("sul",porao);
 
         hall.definirSala("leste", quartoMorador);
@@ -97,10 +94,10 @@ public class Main{
         hall.definirSala("norte",escritorio);
 
         quartoMorador.definirSala("sul", hall);
-
         quartoInfantil.definirSala("sul", hall);
-        
         escritorio.definirSala("sul",hall);
+        salaSecreta.definirSala("sul", escritorio);
+        escritorio.definirSala("leste", salaSecreta);
 
         // Guardando salas no mapa do jogo
         mapaSalas.put("Sacada da Casa", sacada);
