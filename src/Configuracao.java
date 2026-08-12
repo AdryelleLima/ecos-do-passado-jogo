@@ -83,4 +83,21 @@ public class Configuracao{
             default: return velocidadeDigitacao + " ms";
         }
     }
+    public static void limparTela() {
+        try {
+            // Limpa o terminal no Windows (cmd)
+            if (System.getProperty("os.name").contains("Windows")) {
+              new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                // Limpa o terminal no Linux e macOS
+                System.out.print("\033[H\033[2J");
+                 System.out.flush();
+            }
+        } catch (Exception e) {
+            // Fallback: imprime linhas em branco caso o comando falhe em algum terminal
+            for (int i = 0; i < 50; i++) {
+            System.out.println();
+            }
+        }
+    }
 }
