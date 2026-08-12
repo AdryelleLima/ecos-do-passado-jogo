@@ -6,6 +6,7 @@ public class Parser {
     private static final List<String> VERBOS_MOVER = Arrays.asList("ir","caminhar", "andar", "mover", "entrar");
     private static final List<String> VERBOS_EXAMINAR = Arrays.asList("olhar","ver","examinar","observar", "ler", "checar");
     private static final List<String> VERBOS_PEGAR = Arrays.asList("pegar","coletar","guardar","agarrar");
+    private static final List<String> VERBOS_USAR = Arrays.asList("usar", "colocar", "inserir", "abrir", "destrancar", "ligar","utilizar");
     private static final List<String> VERBOS_SAIR = Arrays.asList("sair","desistir","fechar");
 
     public static Comando analisar(String entrada){
@@ -24,6 +25,8 @@ public class Parser {
                 acaoIdentificada = "EXAMINAR";
             }else if(VERBOS_PEGAR.contains(palavra)){
                 acaoIdentificada = "PEGAR";
+            }else if(VERBOS_USAR.contains(palavra)){
+                acaoIdentificada = "USAR";
             }else if(VERBOS_SAIR.contains(palavra)){
                 acaoIdentificada = "SAIR";
             }
