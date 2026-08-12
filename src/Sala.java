@@ -7,6 +7,8 @@ public class Sala{
     private String descricao;
     private Map<String, Sala> saidas; // Conecta a direção ("norte","sul", etc.) com outra Sala
     private Item itemPresente; // Nome do item/documento que está na sala ->  Agora usa a classe Item em vez de String!
+    private boolean trancada = false;
+    private String chaveNecessaria = "";
 
     //Construtor
     public Sala(String nome, String descricao){
@@ -15,7 +17,20 @@ public class Sala{
         this.saidas = new HashMap<>();
         this.itemPresente = null;
     }
-
+    public boolean estaTrancada(){
+        return trancada;
+    }
+    public void trancar(String nomeChave){
+        this.trancada = true;
+        this.chaveNecessaria = nomeChave;
+    }
+    public boolean destrancarCom(String nomeChave){
+        if(trancada && chaveNecessaria.equalsIgnoreCase(nomeChave)){
+            this.trancada = false;
+            return true;
+        }
+        return false;
+    }
     //Define qual sala fica em qual direção
     public void definirSala(String direcao, Sala salaVizinha){
         saidas.put(direcao.toLowerCase(), salaVizinha);
