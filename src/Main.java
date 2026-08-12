@@ -131,7 +131,8 @@ public class Main{
         // Itens fixos (não coletáveis)
         Item armarioCozinha = new Item("Armário da Cozinha", "Um armário antigo de madeira com portas de vidro opaco.", false);
         Item gaveteiro = new Item("Gaveteiro", "Um gaveteiro de madeira com gavetas emperradas.", false);
-        
+        Item gerador = new Item("Gerador", "Um gerador antigo, coberto de poeira e ferrugem.", false);
+
         // Escondento itens dentro de outros
         armarioCozinha.esconderItem(chaveQuartoVisita); 
         gaveteiro.esconderItem(anotacaoGerador);
@@ -320,6 +321,9 @@ public class Main{
                 System.out.println("\n[ Pressione ENTER para continuar... ]");
                 scanner.nextLine();
                 break;
+            case "USAR":
+                GerenciadorInteracao.processarUso(jogador, comando.pegarAlvo(), scanner);
+                break;
 
             case "SAIR":
                 Configuracao.digitar("\nRetornando ao Menu Principal...");
@@ -328,6 +332,4 @@ public class Main{
             }
         }
     }
-    // Durante o jogo ou introdução da cena: Configuracao.digitar("A porta principal bateu com força atrás de você e a tranca emperrou!");
-    
 }
