@@ -115,17 +115,17 @@ public class GerenciadorInteracao{
             tocarAudio("FITA CASSETE #03", 
             "\" Semanas pesquisando(sua voz parecia cansada)... ligando os pontos, os locais que aconteceram.\n" +
             "as possiveis suspeitas, tentando entender sua motivação para continuar mantando as pobres crianças\n"+
-            "precisava escoder as provas que colequei no escritorio, onde ninguem além de mim saiba...\n"+
+            "precisava esconder as provas que colequei no escritorio, onde ninguem além de mim saiba...\n"+
             "até que eu possa ter certeza do verdadeiro assasino. Se passou tanto tempo... cortaram a luz em algum momento\n"+
             "agora eu preciso ficar abastecendo o gerador do porão, para continuar minha investigação. \"");
         }  
         else if ((entradaAlvo.contains("4") || entradaAlvo.contains("decisão") || entradaAlvo.contains("fita")) && jogador.possuiItem("Fita Cassete #03")) {
             tocarAudio("FITA CASSETE #03", 
-            "\" \n" +
-            "\n"+
-            "\n"+
-            "\n"+
-            "\"");
+            "\" Ele sabe que eu sei, por causa disso fica me enviando cartas de ameaça, achando que eu tenho algo a perder,\n" +
+            "\com essas ameaças cheias de medo, ele já tirou de mim, o que eu tinha de mais precioso na vida..."+
+            "não dá para traze-la de volta, mas ainda continuo tendo pesadelos daquele dia...se o denuncio a polícia,\n"+
+            "ele ira me matar antes de ser preso, se o mato me tornarei o assassino que me acusaran ser.\n"+
+            "tenho que ficar preparado para uma invasão iminente, mesmo não tendo pelo que lutar, farei o possível para não perder de propósito... seja o que Deus quiser\"");
         }
         else {
             Configuracao.digitar("Você não possui a fita indicada no seu inventário.");
