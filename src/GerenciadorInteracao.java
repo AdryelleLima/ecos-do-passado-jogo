@@ -95,27 +95,27 @@ public class GerenciadorInteracao{
         }
 
         // Checa qual fita o jogador quer tocar ou qual fita ele possui
-        if ((entradaAlvo.contains("1") || entradaAlvo.contains("porque?")) && jogador.possuiItem("Fita Cassete #01")) {
+        if ((entradaAlvo.contains("1") || entradaAlvo.contains("porque?")|| entradaAlvo.contains("fita")) && jogador.possuiItem("Fita Cassete #01")) {
             tocarAudio("FITA CASSETE #01", 
             "\"até ontem estava tudo bem, parecia perfeito demais, calma, diversão, brincadeiras...\n"+
             "guiando os alunos do acampamento por uma trilha tranquila...\n"+
-            "porque ela estava lá(sua voz soava seria)... se eu pudesse mudar alguma coisa(um tom de arrependimento)...\n"+
-            " naquele momento. Talvez... ela estivesse viva hoje, minha pequena(sua voz termina melancolica)\""
+            "porque ela estava lá (sua voz soava seria)... se eu pudesse mudar alguma coisa (um tom de arrependimento)...\n"+
+            " naquele momento. Talvez... ela estivesse viva hoje, minha pequena (sua voz termina melancolica)\""
             );
         } 
-        else if ((entradaAlvo.contains("2") || entradaAlvo.contains("acusações")) && jogador.possuiItem("Fita Cassete #02")) {
+        else if ((entradaAlvo.contains("2") || entradaAlvo.contains("acusações")|| entradaAlvo.contains("fita")) && jogador.possuiItem("Fita Cassete #02")) {
             tocarAudio("FITA CASSETE #02",  
-            "\" Aconteceu de novo, o mesmo que fizeram com minha filha(sua voz parecia frustada)...\n" +
+            "\" Aconteceu de novo, o mesmo que fizeram com minha filha (sua voz parecia frustada)...\n" +
             "suspeitam de mim, não entendo o porquê, essas acusações... me fizeram perder o que me restava\n"+
-            "meu trabalho, vida social, meu relacionamento com a minha esposa agora...(suspira ao fundo)\n"+
+            "meu trabalho, vida social, meu relacionamento com a minha esposa agora... (suspira ao fundo)\n"+
             "o que preciso fazer para que tudo volte ao que era? preciso descobrir como fazer isso.\n"+
-            "Talvez só assim, eu possa me sentir em paz novamente...(desliga) \"");
+            "Talvez só assim, eu possa me sentir em paz novamente... (desliga) \"");
         } 
         else if ((entradaAlvo.contains("3") || entradaAlvo.contains("pistas") || entradaAlvo.contains("fita")) && jogador.possuiItem("Fita Cassete #03")) {
             tocarAudio("FITA CASSETE #03", 
-            "\" Semanas pesquisando(sua voz parecia cansada)... ligando os pontos, os locais que aconteceram.\n" +
+            "\" Semanas pesquisando (sua voz parecia cansada)... ligando os pontos, os locais que aconteceram.\n" +
             "as possiveis suspeitas, tentando entender sua motivação para continuar mantando as pobres crianças\n"+
-            "precisava esconder as provas que colequei no escritorio, onde ninguem além de mim saiba...\n"+
+            "precisava escoder as provas que colequei no escritorio, onde ninguem além de mim saiba...\n"+
             "até que eu possa ter certeza do verdadeiro assasino. Se passou tanto tempo... cortaram a luz em algum momento\n"+
             "agora eu preciso ficar abastecendo o gerador do porão, para continuar minha investigação. \"");
         }  
@@ -125,7 +125,7 @@ public class GerenciadorInteracao{
             "com essas ameaças cheias de medo, ele já tirou de mim, o que eu tinha de mais precioso na vida...\n"+
             "não dá para traze-la de volta, mas ainda continuo tendo pesadelos daquele dia...se o denuncio a polícia,\n"+
             "ele ira me matar antes de ser preso, se o mato me tornarei o assassino que me acusaran ser.\n"+
-            "tenho que ficar preparado para uma invasão iminente, mesmo não tendo pelo que lutar, farei o possível para não perder de propósito... seja o que Deus quiser.\"");
+            "tenho que ficar preparado para uma invasão iminente, mesmo não tendo pelo que lutar, farei o possível para não perder de propósito... seja o que Deus quiser\"");
         }
         else {
             Configuracao.digitar("Você não possui a fita indicada no seu inventário.");
