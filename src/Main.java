@@ -116,39 +116,106 @@ public class Main{
         mapaSalas.put("Escritorio",escritorio);
         mapaSalas.put("Sala Secreta", salaSecreta);
         
-        // Criando Itens --- criar e adicionar mais itens
+    // Criando Itens --- criar e adicionar mais itens
+        
         // Itens coletaveis
         Item chavePorao = new Item("Chave do Porão","Uma chave antiga e enferrujada.", true);
         Item chaveQuartoVisita = new Item("Chave do Quarto de Visita", "Uma chave dourada pequena.", true);
-        Item chaveSaida = new Item("Chave da Saída", "A chave principal da porta da sacada.", true);
         Item chaveQuartoMorador = new Item("Chave do Quarto do Morador", "Uma chave pequena e desgastada.", true);
         Item galaoGasolina = new Item("Galão de Gasolina", "Contém combustível suficiente para o gerador.", true);
         Item pilhas = new Item("Pilhas", "Duas pilhas grandes de 1,5V ainda lacradas.", true);
         Item gravadorAudio = new Item("Gravador de Áudio", "Um gravador cassete portátil de 1984.", true);
-        Item anotacaoGerador = new Item("Anotações Soltas", "Um pedaço de papel amarelado e dobrado.", true);
-        Item fitaAudio = new Item("Fita Cassete", "Uma fita com a etiqueta 'Registro #04'.", true);
+        Item fitaAudio = new Item("Fita Cassete", "Uma fita com a etiqueta 'Registro #01'.", true);
 
         // Itens fixos (não coletáveis)
-        Item armarioCozinha = new Item("Armário da Cozinha", "Um armário antigo de madeira com portas de vidro opaco.", false);
-        Item gaveteiro = new Item("Gaveteiro", "Um gaveteiro de madeira com gavetas emperradas.", false);
-        Item gerador = new Item("Gerador", "Um gerador antigo, coberto de poeira e ferrugem.", false);
+        
+            //itens da cozinha -- Falta descricao
+        Item armarioCozinha = new Item("Armário da Cozinha", "Um armário antigo de madeira com portas de vidro opaco. Com uma pia em cima dele.", false);
+        Item geladeira = new Item("Geladeira","Uma geladeira de aparência retro, bem desgastada com varios imãs espalhados na porta", false);
+        Item fogao = new Item("Fogão","Fogão velho, ainda com panelas em cima", false);
+        Item ilhaCozinha =new Item("Ilha da cozinha","Ilha de madeira, tem alguns banquinhos acabados cheio de teias.",false);    
+        Item cristaleira = new Item("Cristaleira","Um armário com portas de vidro espondo varios copos e pratos",false);
+        Item estanteCozinha = new Item("Estante da Cozinha","",false);
 
+            //itens da sala
+        Item gaveteiro = new Item("Gaveteiro", "Um gaveteiro de madeira com gavetas emperradas.", false);
+        Item sofa = new Item("Sofá","Sofa de tecido, bastante acabado, não dá nem para sentar, seria desconfortavel",false);
+        Item lareira = new Item("Lareira","Lareira de predra, apenas com cinzas",false);
+
+            //itens do porão -- Falta descrição
+        Item gerador = new Item("Gerador", "Um gerador antigo, coberto de poeira e ferrugem.", false);
+        Item pateleiraNorte = new Item("Prateleira Norte","",false); 
+        Item prateleiraCentro = new Item("Prateleira Centro","",false); 
+        Item prateleiraSul = new Item("Prateleira Sul","",false); 
+        Item interrutorEnergia = new Item("Interruptor Energia","Painel de energia coberto de poeira",false);
+
+            //itens banheiro -- Falta descrição
+        Item vasoSanitario= new Item("Vaso Sanitario","", false);            
+        Item piaBanheiro= new Item("Pia","", false);       
+        Item boxChuveiro= new Item("Chuveiro","", false);                
+        Item espelho = new Item("Espelho","",false);
+
+            //itens sala de jantar -- falta descrição
+        Item mesaJantar = new Item("","",false);
+        Item estante = new Item("","",false);
+        
+            //itens quarto do morador -- falta descrição
+        Item camaCasal = new Item("","",false); 
+        Item mesaCabeceiraEsqueda = new Item("","",false);
+        Item mesaCabeceiraDireita = new Item("","",false);
+        Item GuardaRoupaGrande = new Item("","",false);
+
+            //itens do escritorio -- FALTA DESCRICAO 
+        Item estanteLivros = new Item("","",false);
+        Item estanteFalsa = new Item("","",false);
+        Item escrivaninha = new Item("","",false);
+
+            //itens quarto de visita
+            //itens sala secreta
+
+            
         // Escondento itens dentro de outros
         armarioCozinha.esconderItem(chaveQuartoVisita); 
-        gaveteiro.esconderItem(anotacaoGerador);
-
+        
         // Colocando itens no mapa de itens para acesso rápido
         // mapaItens.put("chave porão", chavePorao);
-        
+    
         // Colocando itens nas Salas --- atualizarei ainda
         cozinha.conjuntoItemPresente(armarioCozinha);
-        salaEstar.conjuntoItemPresente(gaveteiro);
+        cozinha.conjuntoItemPresente(geladeira);
+        cozinha.conjuntoItemPresente(fogao);
+        cozinha.conjuntoItemPresente(ilhaCozinha);
+        cozinha.conjuntoItemPresente(cristaleira);
+        cozinha.conjuntoItemPresente(estanteCozinha);
 
-        // Definindo o texto legível do bilhete
+        salaEstar.conjuntoItemPresente(gaveteiro);
+        salaEstar.conjuntoItemPresente(sofa);        
+        salaEstar.conjuntoItemPresente(lareira);
+
+        porao.conjuntoItemPresente(gerador);            
+        porao.conjuntoItemPresente(interrutorEnergia);        
+        porao.conjuntoItemPresente(prateleiraSul);        
+        porao.conjuntoItemPresente(prateleiraCentro);        
+        porao.conjuntoItemPresente(pateleiraNorte);
+        
+        banheiro.conjuntoItemPresente(espelho);            
+        banheiro.conjuntoItemPresente(piaBanheiro);        
+        banheiro.conjuntoItemPresente(vasoSanitario);        
+        banheiro.conjuntoItemPresente(boxChuveiro); 
+        
+        salaJantar.conjuntoItemPresente(mesaJantar);
+        salaJantar.conjuntoItemPresente(estante);
+
+        quartoMorador.conjuntoItemPresente(GuardaRoupaGrande);
+        quartoMorador.conjuntoItemPresente(camaCasal);
+        quartoMorador.conjuntoItemPresente(mesaCabeceiraDireita);
+        quartoMorador.conjuntoItemPresente(mesaCabeceiraEsqueda);
+
+        /*  Definindo o texto legível do bilhete
         anotacaoGerador.conjuntoConteudoTexto(
         "\"O gerador no porão está falhando. Para reativar o circuito da estante,\n" +
-        "é necessário colocar combustível e acionar o interrupter principal.\""
-);
+        "é necessário colocar combustível e acionar o interrupter principal.\"");*/
+
 
     }
     private static void exibirSobre() {
