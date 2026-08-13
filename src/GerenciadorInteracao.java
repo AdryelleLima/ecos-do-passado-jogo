@@ -122,10 +122,10 @@ public class GerenciadorInteracao{
         else if ((entradaAlvo.contains("4") || entradaAlvo.contains("decisão") || entradaAlvo.contains("fita")) && jogador.possuiItem("Fita Cassete #04")) {
             tocarAudio("FITA CASSETE #04", 
             "\" Ele sabe que eu sei, por causa disso fica me enviando cartas de ameaça, achando que eu tenho algo a perder,\n" +
-            "\com essas ameaças cheias de medo, ele já tirou de mim, o que eu tinha de mais precioso na vida..."+
+            "com essas ameaças cheias de medo, ele já tirou de mim, o que eu tinha de mais precioso na vida...\n"+
             "não dá para traze-la de volta, mas ainda continuo tendo pesadelos daquele dia...se o denuncio a polícia,\n"+
             "ele ira me matar antes de ser preso, se o mato me tornarei o assassino que me acusaran ser.\n"+
-            "tenho que ficar preparado para uma invasão iminente, mesmo não tendo pelo que lutar, farei o possível para não perder de propósito... seja o que Deus quiser\"");
+            "tenho que ficar preparado para uma invasão iminente, mesmo não tendo pelo que lutar, farei o possível para não perder de propósito... seja o que Deus quiser.\"");
         }
         else {
             Configuracao.digitar("Você não possui a fita indicada no seu inventário.");
