@@ -119,8 +119,8 @@ public class GerenciadorInteracao{
             "até que eu possa ter certeza do verdadeiro assasino. Se passou tanto tempo... cortaram a luz em algum momento\n"+
             "agora eu preciso ficar abastecendo o gerador do porão, para continuar minha investigação. \"");
         }  
-        else if ((entradaAlvo.contains("4") || entradaAlvo.contains("decisão") || entradaAlvo.contains("fita")) && jogador.possuiItem("Fita Cassete #03")) {
-            tocarAudio("FITA CASSETE #03", 
+        else if ((entradaAlvo.contains("4") || entradaAlvo.contains("decisão") || entradaAlvo.contains("fita")) && jogador.possuiItem("Fita Cassete #04")) {
+            tocarAudio("FITA CASSETE #04", 
             "\" Ele sabe que eu sei, por causa disso fica me enviando cartas de ameaça, achando que eu tenho algo a perder,\n" +
             "\com essas ameaças cheias de medo, ele já tirou de mim, o que eu tinha de mais precioso na vida..."+
             "não dá para traze-la de volta, mas ainda continuo tendo pesadelos daquele dia...se o denuncio a polícia,\n"+
