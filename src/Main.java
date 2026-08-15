@@ -136,6 +136,22 @@ public class Main {
         Item fita3 = new Item("Fita Cassete #03", "Uma fita com a etiqueta 'pistas'.", true);
         Item fita4 = new Item("Fita Cassete #04", "Uma fita com a etiqueta 'decisão'.", true);
 
+        // Registrando coletáveis no mapaItens
+        mapaItens.put("chave do porão", chavePorao);
+        mapaItens.put("chave do quarto", chaveQuarto);
+        mapaItens.put("chave do quarto do morador", chaveQuartoMorador);
+        mapaItens.put("chave do escritorio", chaveEscritorio);
+        mapaItens.put("chave do guarda-roupa", chaveGuardaRoupa);
+        mapaItens.put("galão de gasolina", galaoGasolina);
+        mapaItens.put("galao de gasolina", galaoGasolina); // Variação sem acento por garantia
+        mapaItens.put("pilhas", pilhas);
+        mapaItens.put("gravador de áudio", gravadorAudio);
+        mapaItens.put("gravador de audio", gravadorAudio); // Variação sem acento
+        mapaItens.put("fita cassete #01", fita1);
+        mapaItens.put("fita cassete #02", fita2);
+        mapaItens.put("fita cassete #03", fita3);
+        mapaItens.put("fita cassete #04", fita4);
+        
         // Itens fixos (não coletáveis)
 
         // itens da cozinha -- Falta descricao
@@ -150,15 +166,29 @@ public class Main {
                 false);
         Item estanteCozinha = new Item("Estante da Cozinha", "", false);
 
-        // itens da sala
+        mapaItens.put("armário da cozinha", armarioCozinha);
+        mapaItens.put("armario da cozinha", armarioCozinha);
+        mapaItens.put("geladeira", geladeira);
+        mapaItens.put("fogão", fogao);
+        mapaItens.put("fogao", fogao);
+        mapaItens.put("ilha da cozinha", ilhaCozinha);
+        mapaItens.put("cristaleira", cristaleira);
+        mapaItens.put("estante da cozinha", estanteCozinha);
+
+        // itens da sala de estar
         Item gaveteiro = new Item("Gaveteiro", "Um gaveteiro de madeira com gavetas emperradas.", false);
         Item sofa = new Item("Sofá", "Sofa de tecido, bastante acabado, não dá nem para sentar, seria desconfortavel.",
                 false);
         Item lareira = new Item("Lareira", "Lareira de predra, apenas com cinzas.", false);
 
+        mapaItens.put("gaveteiro", gaveteiro);
+        mapaItens.put("sofá", sofa);
+        mapaItens.put("sofa", sofa);
+        mapaItens.put("lareira", lareira);
+
         // itens do porão
         Item gerador = new Item("Gerador", "Um gerador antigo, coberto de poeira e ferrugem.", false);
-        Item pateleiraNorte = new Item("Prateleira Norte",
+        Item prateleiraNorte = new Item("Prateleira Norte",
                 "Prateleira esta com alguns mantimentos consumiveis, mas no momento nada parece comestivel.", false);
         Item prateleiraCentro = new Item("Prateleira Centro",
                 "Prateleira esta com algumas caixa que contem decorações festivas.", false);
@@ -167,6 +197,12 @@ public class Main {
         Item interrutorEnergia = new Item("Interruptor Energia",
                 "Painel de energia coberto de poeira e teias de aranha.", false);
 
+        mapaItens.put("gerador", gerador);
+        mapaItens.put("prateleira norte", prateleiraNorte);
+        mapaItens.put("prateleira centro", prateleiraCentro);
+        mapaItens.put("prateleira sul", prateleiraSul);
+        mapaItens.put("interruptor energia", interrutorEnergia);
+        
         // itens banheiro
         Item vasoSanitario = new Item("Vaso Sanitario", "Não estou com vontade de usar.", false);
         Item piaBanheiro = new Item("Armario com Pia",
@@ -175,23 +211,42 @@ public class Main {
         Item espelho = new Item("Espelho",
                 "O espelho em cima da pia esta bastante estilhaçado, mal da para me ver no espelho.", false);
 
+        mapaItens.put("vaso sanitario", vasoSanitario);
+        mapaItens.put("armario com pia", piaBanheiro);
+        mapaItens.put("chuveiro", boxChuveiro);
+        mapaItens.put("espelho", espelho);
+
         // itens sala de jantar -- falta descrição
         Item mesaJantar = new Item("Mesa de Jantar", "Mesa de jantar de madeira com quatro cadeiras de madeira.",
                 false);
         Item estante = new Item("Estante", "", false);
 
+        mapaItens.put("mesa de jantar", mesaJantar);
+        mapaItens.put("estante", estante);
+
         // itens quarto do morador -- falta descrição
         Item camaCasal = new Item("Cama de Casal", "", false);
-        Item mesaCabeceiraEsqueda = new Item("Mesa Cabeceira Esquerda", "", false);
+        Item mesaCabeceiraEsquerda = new Item("Mesa Cabeceira Esquerda", "", false);
         Item mesaCabeceiraDireita = new Item("Mesa Cabeceira Direita", "", false);
         Item guardaRoupaGrande = new Item("Guarda-Roupa Grande", "", false);
         Item esqueleto = new Item("Esqueleto Humano", "Nossa... o que realmente aconteceu? de quem é esse esqueleto?",
                 false);
 
+        mapaItens.put("cama de casal", camaCasal);
+        mapaItens.put("mesa cabeceira esquerda", mesaCabeceiraEsquerda);
+        mapaItens.put("mesa cabeceira direita", mesaCabeceiraDireita);
+        mapaItens.put("guarda-roupa grande", guardaRoupaGrande);
+        mapaItens.put("guarda roupa grande", guardaRoupaGrande);
+        mapaItens.put("esqueleto humano", esqueleto);
+
         // itens do escritorio -- FALTA DESCRICAO
         Item estanteLivros = new Item("Estante de Livros Grande", "", false);
         Item estanteFalsa = new Item("Estante Pequena", "", false);
         Item escrivaninha = new Item("Escrivaninha", "", false);
+
+        mapaItens.put("estante de livros grande", estanteLivros);
+        mapaItens.put("estante pequena", estanteFalsa);
+        mapaItens.put("escrivaninha", escrivaninha);
 
         // itens quarto de visita
         Item camaSolteiro = new Item("Cama de Solteiro", "", false);
@@ -199,16 +254,28 @@ public class Main {
         Item guardaRoupaPequeno = new Item("Guarda-Roupa Pequeno", "", false);
         Item mesaCabeceira = new Item("Mesa Cabeceira", "", false);
 
+        mapaItens.put("cama de solteiro", camaSolteiro);
+        mapaItens.put("caixas de papelão", caixasPapelao);
+        mapaItens.put("caixas de papelao", caixasPapelao);
+        mapaItens.put("guarda-roupa pequeno", guardaRoupaPequeno);
+        mapaItens.put("guarda roupa pequeno", guardaRoupaPequeno);
+        mapaItens.put("mesa cabeceira", mesaCabeceira);
+
         // itens sala secreta
         Item mesaInvestigativa = new Item("Mesa Investigava", "", false);
         Item quadroDetetive = new Item("Quadro de investigação", "", false);
+
+        mapaItens.put("mesa investigativa", mesaInvestigativa);
+        mapaItens.put("quadro de investigação", quadroDetetive);
+        mapaItens.put("quadro de investigaçao", quadroDetetive);
+        mapaItens.put("quadro de investigacao", quadroDetetive);
 
         // Escondento itens dentro de outros
         armarioCozinha.esconderItem(chaveQuarto);
 
         guardaRoupaGrande.esconderItem(esqueleto);
         esqueleto.esconderItem(fita4);
-        mesaCabeceiraEsqueda.esconderItem(chavePorao);
+        mesaCabeceiraEsquerda.esconderItem(chavePorao);
         camaCasal.esconderItem(fita3);
 
         camaSolteiro.esconderItem(fita2);
@@ -223,9 +290,6 @@ public class Main {
         prateleiraSul.esconderItem(chaveEscritorio);
 
         escrivaninha.esconderItem(gravadorAudio);
-
-        // Colocando itens no mapa de itens para acesso rápido
-        // mapaItens.put("chave porão", chavePorao);
 
         // Colocando itens nas Salas
         cozinha.conjuntoItemPresente(armarioCozinha);
@@ -243,7 +307,7 @@ public class Main {
         porao.conjuntoItemPresente(interrutorEnergia);
         porao.conjuntoItemPresente(prateleiraSul);
         porao.conjuntoItemPresente(prateleiraCentro);
-        porao.conjuntoItemPresente(pateleiraNorte);
+        porao.conjuntoItemPresente(prateleiraNorte);
 
         banheiro.conjuntoItemPresente(espelho);
         banheiro.conjuntoItemPresente(piaBanheiro);
@@ -256,7 +320,7 @@ public class Main {
         quartoMorador.conjuntoItemPresente(guardaRoupaGrande);
         quartoMorador.conjuntoItemPresente(camaCasal);
         quartoMorador.conjuntoItemPresente(mesaCabeceiraDireita);
-        quartoMorador.conjuntoItemPresente(mesaCabeceiraEsqueda);
+        quartoMorador.conjuntoItemPresente(mesaCabeceiraEsquerda);
         quartoMorador.conjuntoItemPresente(galaoGasolina);
 
         escritorio.conjuntoItemPresente(estanteLivros);
