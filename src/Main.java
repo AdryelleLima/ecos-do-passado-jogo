@@ -120,7 +120,7 @@ public class Main{
         
         // Itens coletaveis
         Item chavePorao = new Item("Chave do Porão","Uma chave antiga e enferrujada.", true);
-        Item chaveQuartoVisita = new Item("Chave do Quarto de Visita", "Uma chave dourada pequena.", true);
+        Item chaveQuarto = new Item("Chave do Quarto", "Uma chave dourada pequena.", true);
         Item chaveQuartoMorador = new Item("Chave do Quarto do Morador", "Uma chave pequena e desgastada.", true);
         Item chaveEscritorio = new Item("Chave do Escritorio","Uma chave ornamentada bonita, porém tá enferrujada", true);
         Item chaveGuardaRoupa = new Item("Chave do Guarda-Roupa","Uma chave simples, por incrivel que pareça esta em boas condições",true);
@@ -188,7 +188,7 @@ public class Main{
         Item quadroDetetive = new Item ("Quadro de investigação","",false);
             
         // Escondento itens dentro de outros
-        armarioCozinha.esconderItem(chaveQuartoVisita);
+        armarioCozinha.esconderItem(chaveQuarto);
 
         guardaRoupaGrande.esconderItem(esqueleto);
         esqueleto.esconderItem(fita4);
@@ -256,6 +256,12 @@ public class Main{
         salaSecreta.conjuntoItemPresente(quadroDetetive);
         salaSecreta.conjuntoItemPresente(mesaInvestigativa);
 
+        porao.trancar("Chave do Porão");
+        quartoInfantil.trancar("Chave do Quarto");
+        quartoMorador.trancar("Chave do Quarto do Morador");
+        escritorio.trancar("Chave do Escritorio");
+        guardaRoupaGrande.trancar("Chave do Guarda-Roupa");
+        
         /*  Definindo o texto legível do bilhete
         anotacaoGerador.conjuntoConteudoTexto(
         "\"O gerador no porão está falhando. Para reativar o circuito da estante,\n" +
@@ -371,7 +377,13 @@ public class Main{
                case "MOVER":
                 Sala proxima = salaAtual.pegarSaida(comando.pegarAlvo());
                 if (proxima != null) {
-                    jogador.conjuntoSalaAtual(proxima);
+                    if (proxima.estaTrancada()) {
+                        System.out.println("\nA porta para " + proxima.pegarNome() + " está TRANCADA! Você precisa de uma chave.");
+                        System.out.println("[ Pressione ENTER para continuar... ]");
+                         scanner.nextLine();
+                    } else {
+                        jogador.conjuntoSalaAtual(proxima); // Movel o jogador se estiver livre
+                    }
                 } else {
                     System.out.println("\nNão há passagem nessa direção!");
                     System.out.println("[ Pressione ENTER para continuar... ]");
@@ -401,16 +413,23 @@ public class Main{
                         Configuracao.digitar(itemAlvo.pegarConteudoTexto());
                         System.out.println("-----------------------------");
                     }
-
-                    // Se for um móvel com item escondido
-                    if (itemAlvo.temItemEscondido()) {
-                        Item encontrado = itemAlvo.pegarItemEscondido();
-                        Configuracao.digitar("\n[!] Procurando melhor, você encontrou: " + encontrado.pegarNome() + "!");
-                        salaAtual.conjuntoItemPresente(encontrado); // Disponibiliza na sala
-                        itemAlvo.esconderItem(null); // Esvazia o móvel
-                    }
+                    // Se for um móvel e estiver trancado
+                    if (itemAlvo.estaTrancado()) {
+                        Configuracao.digitar(itemAlvo.pegarDescricao());
+                        Configuracao.digitar("\n[!] O objeto está trancado. Talvez eu precise da " + itemAlvo.pegarChaveNecessaria() + " para abri-lo.");
+                    } 
+                     else {
+                            Configuracao.digitar(itemAlvo.pegarDescricao());
+                            // Se for um móvel com item escondido
+                                if (itemAlvo.temItemEscondido()) {
+                                    Item encontrado = itemAlvo.pegarItemEscondido();
+                                    Configuracao.digitar("\n[!] Procurando melhor, você encontrou: " + encontrado.pegarNome() + "!");
+                                    salaAtual.conjuntoItemPresente(encontrado); // Disponibiliza na sala
+                                    itemAlvo.esconderItem(null); // Esvazia o móvel
+                                }
+                        }
                 } else {
-                    Configuracao.digitar("Você não vê ou não possui esse item para examinar.");
+                    Configuracao.digitar("Eu não vejo ou não possui item para examinar.");
                 }
 
                 System.out.println("\n[ Pressione ENTER para continuar... ]");
@@ -424,10 +443,10 @@ public class Main{
                         jogador.adicionarItem(itemNaSala);
                         salaAtual.conjuntoItemPresente(null); // Remove da sala
                     } else {
-                        System.out.println("\nEsse objeto é muito pesado ou está fixo no cenário.");
+                        System.out.println("\nEsse objeto é muito pesado, não consigo pegar.");
                     }
                 } else {
-                    System.out.println("\nNão há esse item disponível para pegar aqui.");
+                    System.out.println("\nNão há esse item para pegar aqui.");
                 }
 
                 System.out.println("\n[ Pressione ENTER para continuar... ]");
