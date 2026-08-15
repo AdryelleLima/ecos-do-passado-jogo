@@ -55,7 +55,7 @@ public class GerenciadorInteracao{
         Sala quartoInfantil = salaAtual.pegarSaida("nordeste");
         if (salaAtual.pegarNome().equalsIgnoreCase("Hall") && quartoInfantil != null && quartoInfantil.estaTrancada()) {
             quartoInfantil.destrancarCom("Chave do Quarto de Visita");
-            Configuracao.digitar("GirO a chave dourada na fechadura do Quarto Infantil. A porta range e se abre!");
+            Configuracao.digitar("Giro a chave dourada na fechadura do Quarto Infantil. A porta range e se abre!");
             return;
         }
     }
@@ -130,7 +130,7 @@ public class GerenciadorInteracao{
     
     private static void usarFita(Jogador jogador, String entradaAlvo) {
         if (!jogador.possuiItem("Gravador de Áudio")) {
-            Configuracao.digitar("Precisa ter um Gravador de Áudio na mochila para tocar uma fita.");
+            Configuracao.digitar("Preciso ter um Gravador de Áudio na mochila para tocar uma fita.");
             return;
         }
 
@@ -177,7 +177,7 @@ public class GerenciadorInteracao{
         }
     }
     private static void tocarAudio(String titulo, String transcricao) {
-        Configuracao.digitar("Você insere a " + titulo + " e aperta PLAY...\n");
+        Configuracao.digitar("Insere a " + titulo + " e aperto PLAY...\n");
         System.out.println("--------------------------------------------------");
         System.out.println("  ÁUDIO REPRODUZINDO: " + titulo);
         System.out.println("--------------------------------------------------");
