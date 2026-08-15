@@ -40,14 +40,59 @@ public class GerenciadorInteracao{
     // --- MÉTODOS ESPECÍFICOS DE CADA AÇÃO ---
 
     private static void usarChave(Jogador jogador, Sala salaAtual) {
-        if (jogador.possuiItem("Chave do Porão") && salaAtual.pegarNome().equalsIgnoreCase("Sala de Jantar")) {
-            Configuracao.digitar("Eu insiro a Chave do Porão na fechadura pesada. A porta se destranca com um estalo!");
-        } else if (jogador.possuiItem("Chave do Quarto de Visita") && salaAtual.pegarNome().equalsIgnoreCase("Hall")) {
-            Configuracao.digitar("Eu destranquei a porta do Quarto de Visita com a Chave Dourada!");
-        } else {
-            Configuracao.digitar("Essa chave não parece funcionar em nenhuma fechadura por aqui.");
+        // 1. Chave do Porão (Usada na Sala de Jantar / Acesso à Escada do Porão)
+    if (jogador.possuiItem("Chave do Porão")) {
+        Sala escadaPorao = salaAtual.pegarSaida("leste"); // Conexão da Sala de Jantar com a escada
+        if (salaAtual.pegarNome().equalsIgnoreCase("Sala de Jantar") && escadaPorao != null && escadaPorao.estaTrancada()) {
+            escadaPorao.destrancarCom("Chave do Porão");
+            Configuracao.digitar("Insero a Chave do Porão na fechadura pesada. A porta para o porão se destranca com um estalo!");
+            return;
         }
     }
+
+    // 2. Chave do Quarto de Visita / Infantil (Usada no Hall)
+    if (jogador.possuiItem("Chave do Quarto de Visita")) {
+        Sala quartoInfantil = salaAtual.pegarSaida("nordeste");
+        if (salaAtual.pegarNome().equalsIgnoreCase("Hall") && quartoInfantil != null && quartoInfantil.estaTrancada()) {
+            quartoInfantil.destrancarCom("Chave do Quarto de Visita");
+            Configuracao.digitar("GirO a chave dourada na fechadura do Quarto Infantil. A porta range e se abre!");
+            return;
+        }
+    }
+
+    // 3. Chave do Quarto do Morador (Usada no Hall)
+    if (jogador.possuiItem("Chave do Quarto do Morador")) {
+        Sala quartoMorador = salaAtual.pegarSaida("leste");
+        if (salaAtual.pegarNome().equalsIgnoreCase("Hall") && quartoMorador != null && quartoMorador.estaTrancada()) {
+            quartoMorador.destrancarCom("Chave do Quarto do Morador");
+            Configuracao.digitar("A chave desgastada entra com facilidade. O Quarto do Morador está destrancado.");
+            return;
+        }
+    }
+
+    // 4. Chave do Escritório (Usada no Hall)
+    if (jogador.possuiItem("Chave do Escritorio")) {
+        Sala escritorio = salaAtual.pegarSaida("norte");
+        if (salaAtual.pegarNome().equalsIgnoreCase("Hall") && escritorio != null && escritorio.estaTrancada()) {
+            escritorio.destrancarCom("Chave do Escritorio");
+            Configuracao.digitar("Uso a chave ornamentada no Escritório. O mecanismo da tranca cede suavemente.");
+            return;
+        }
+    }
+
+    // 5. Chave do Guarda-Roupa (Usada dentro do Quarto do Morador)
+    if (jogador.possuiItem("Chave do Guarda-Roupa") && salaAtual.pegarNome().equalsIgnoreCase("Quarto Morador")) {
+        Item guardaRoupa = salaAtual.pegarItemPresente();
+        if (guardaRoupa != null && guardaRoupa.pegarNome().equalsIgnoreCase("Guarda-Roupa Grande")) {
+            Configuracao.digitar("Destranco o Guarda-Roupa Grande com a chave simples. As portas se abrem devagar...");
+            // Se o guarda-roupa tiver um item escondido (como o esqueleto), ele fica acessível
+            return;
+        }
+    }
+
+    // Caso o jogador tente usar uma chave na sala errada ou sem porta trancada por perto
+    Configuracao.digitar("Nenhuma das chaves no seu inventário parece servir para a fechadura mais próxima aqui.");
+}
     private static void usarGasolina(Jogador jogador, Sala salaAtual) {
         if (salaAtual.pegarNome().equalsIgnoreCase("Porão")) {
             if (jogador.possuiItem("Galão de Gasolina")) {
@@ -85,12 +130,12 @@ public class GerenciadorInteracao{
     
     private static void usarFita(Jogador jogador, String entradaAlvo) {
         if (!jogador.possuiItem("Gravador de Áudio")) {
-            Configuracao.digitar("Você precisa ter um Gravador de Áudio na mochila para tocar uma fita.");
+            Configuracao.digitar("Precisa ter um Gravador de Áudio na mochila para tocar uma fita.");
             return;
         }
 
         if (!gravadorComPilhas) {
-            Configuracao.digitar("Você tenta ligar o gravador, mas ele está sem pilhas.");
+            Configuracao.digitar("Tento ligar o gravador, mas ele está sem pilhas.");
             return;
         }
 
@@ -106,7 +151,7 @@ public class GerenciadorInteracao{
         else if ((entradaAlvo.contains("2") || entradaAlvo.contains("acusações")|| entradaAlvo.contains("fita")) && jogador.possuiItem("Fita Cassete #02")) {
             tocarAudio("FITA CASSETE #02",  
             "\" Aconteceu de novo, o mesmo que fizeram com minha filha (sua voz parecia frustada)...\n" +
-            "suspeitam de mim, não entendo o porquê, essas acusações... me fizeram perder o que me restava\n"+
+            "suspeitam de mim, não entendo o porque, essas acusações... me fizeram perder o que me restava\n"+
             "meu trabalho, vida social, meu relacionamento com a minha esposa agora... (suspira ao fundo)\n"+
             "o que preciso fazer para que tudo volte ao que era? preciso descobrir como fazer isso.\n"+
             "Talvez só assim, eu possa me sentir em paz novamente... (desliga) \"");
@@ -114,8 +159,8 @@ public class GerenciadorInteracao{
         else if ((entradaAlvo.contains("3") || entradaAlvo.contains("pistas") || entradaAlvo.contains("fita")) && jogador.possuiItem("Fita Cassete #03")) {
             tocarAudio("FITA CASSETE #03", 
             "\" Semanas pesquisando (sua voz parecia cansada)... ligando os pontos, os locais que aconteceram.\n" +
-            "as possiveis suspeitas, tentando entender sua motivação para continuar mantando as pobres crianças\n"+
-            "precisava escoder as provas que colequei no escritorio, onde ninguem além de mim saiba...\n"+
+            "as possiveis suspeitas, tentando entender sua motivação para continuar matando as pobres crianças\n"+
+            "precisava escoder as provas que coloquei no escritorio, onde ninguem além de mim saiba...\n"+
             "até que eu possa ter certeza do verdadeiro assasino. Se passou tanto tempo... cortaram a luz em algum momento\n"+
             "agora eu preciso ficar abastecendo o gerador do porão, para continuar minha investigação. \"");
         }  
@@ -123,8 +168,8 @@ public class GerenciadorInteracao{
             tocarAudio("FITA CASSETE #04", 
             "\" Ele sabe que eu sei, por causa disso fica me enviando cartas de ameaça, achando que eu tenho algo a perder,\n" +
             "com essas ameaças cheias de medo, ele já tirou de mim, o que eu tinha de mais precioso na vida...\n"+
-            "não dá para traze-la de volta, mas ainda continuo tendo pesadelos daquele dia...se o denuncio a polícia,\n"+
-            "ele ira me matar antes de ser preso, se o mato me tornarei o assassino que me acusaran ser.\n"+
+            "não dá para traze-la de volta, mas ainda continuo tendo pesadelos daquele dia...se o denuncio à polícia,\n"+
+            "ele ira me matar antes de ser preso, se o mato me tornarei o assassino que me acusaram ser.\n"+
             "tenho que ficar preparado para uma invasão iminente, mesmo não tendo pelo que lutar, farei o possível para não perder de propósito... seja o que Deus quiser\"");
         }
         else {
