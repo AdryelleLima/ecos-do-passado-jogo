@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Configuracao {
     // velocidade em milissegundos por caractere (padrão: 30ms)
-    private static int velocidadeDigitacao = 30;
+    private static int velocidadeDigitacao = 0;
 
     public static int pegarVelocidadeDigitacao() {
         return velocidadeDigitacao;
@@ -48,6 +48,7 @@ public class Configuracao {
         boolean noMenuConfig = true;
 
         while (noMenuConfig) {
+            limparTela();
             System.out.println("\n==================================================");
             System.out.println("            CONFIGURAÇÕES DE TEXTO               ");
             System.out.println("==================================================");
@@ -123,5 +124,16 @@ public class Configuracao {
                 System.out.println();
             }
         }
+    }
+    public static void exibirCabecalho(String subtitulo) {
+        System.out.println("==================================================");
+        System.out.println("  ECOS DO PASSADO  |  " + subtitulo.toUpperCase()   );
+        System.out.println("==================================================\n");
+    }
+
+    public static void exibirCabecalho() {
+        System.out.println("==================================================");
+        System.out.println("   ECOS DO PASSADO: O SEGREDO DA CASA ABANDONADA  ");
+        System.out.println("==================================================\n");
     }
 }
