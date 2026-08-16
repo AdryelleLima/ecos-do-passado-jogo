@@ -1,3 +1,4 @@
+
 public class Item{
     private String nome;
     private String descricao;
@@ -19,6 +20,7 @@ public class Item{
         this.itemEscondido = null;
         this.conteudoTexto = null;
     }
+
     public boolean estaTrancado() {
         return trancado;
     }
