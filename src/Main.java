@@ -60,7 +60,6 @@ public class Main {
 
     private static void exibirAguardar() {
         System.out.println("\n<< WAIT >>");
-        scanner.nextLine();
     }
 
     private static void exibirIntroducaoEEntrar(Jogador jogador) {
@@ -91,9 +90,8 @@ public class Main {
         jogador.conjuntoSalaAtual(salaEstar);
 
         Configuracao.limparTela();
-        Configuracao.exibirCabecalho();
 
-        Configuracao.limparTela();
+        Configuracao.exibirCabecalho();
         Configuracao.digitar("Ouço a conversa dos meus colegas ao fundo se distanciando, me viro para olhar e...");
         Configuracao.digitar("BANG! A porta de entrada se fecha bruscamente atrás de mim com um vento misterioso.");
         Configuracao.digitar("Ouço o estalo da tranca da porta travando. Estou preso dentro da casa agora!");
@@ -254,6 +252,9 @@ public class Main {
             System.out.println("\n--------------------------------------------------");
             exibirAguardar();
             String entrada = scanner.nextLine().trim();
+                if (entrada.trim().isEmpty()) {
+                    continue;
+                }
 
             // Comando direto de salvar a qualquer momento
             if (entrada.equalsIgnoreCase("salvar")) {
@@ -277,8 +278,7 @@ public class Main {
             String alvo = comando.pegarAlvo();
 
             if (!comando.temAcao()) {
-                System.out.println(
-                        "\nNão entendi o comando. Tente verbos como 'ir', 'examinar', 'pegar', 'mochila' ou 'salvar'.");
+                ultimaNotificacao = "\nNão entendi o comando. Tente verbos como 'ir', 'examinar', 'pegar', 'mochila' ou 'salvar'.";
                 System.out.println("[ Pressione ENTER para tentar novamente... ]");
                 scanner.nextLine();
                 continue;
@@ -303,9 +303,7 @@ public class Main {
 
                     if (proxima != null) {
                         if (proxima.estaTrancada()) {
-                            System.out.println("\nA porta para " + proxima.pegarNome() + " está TRANCADA!");
-                            System.out.println("[ Pressione ENTER para continuar... ]");
-                            scanner.nextLine();
+                            ultimaNotificacao ="\nA porta para " + proxima.pegarNome() + " está TRANCADA!";
                         } else {
                             jogador.conjuntoSalaAtual(proxima);
 
@@ -316,9 +314,8 @@ public class Main {
                         }
 
                     } else {
-                        System.out.println("\nNão há passagem nessa direção!");
-                        System.out.println("[ Pressione ENTER para continuar... ]");
-                        scanner.nextLine();
+                        ultimaNotificacao = "\nNão há passagem nessa direção!";
+                
                     }
                     break;
 
