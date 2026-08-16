@@ -1,36 +1,53 @@
 import java.util.Scanner;
 
-public class Configuracao{
+public class Configuracao {
     // velocidade em milissegundos por caractere (padrão: 30ms)
     private static int velocidadeDigitacao = 30;
-    
-    public static int pegarVelocidadeDigitacao(){
+
+    public static int pegarVelocidadeDigitacao() {
         return velocidadeDigitacao;
     }
-    public static void conjuntoVelocidadeDigitacao(int novaVelocidade){
+
+    public static void conjuntoVelocidadeDigitacao(int novaVelocidade) {
         velocidadeDigitacao = novaVelocidade;
     }
+
     // Método responsavel por imprimir texto letra por letra
-    public static void digitar(String texto){
-        for(char letra : texto.toCharArray()){
+    public static void digitar(String texto) {
+        boolean pular = false;
+    try {
+        for (char letra : texto.toCharArray()) {
             System.out.print(letra);
-            System.out.flush();// garante a impressão imediata no terminal
-            try{
-                if(velocidadeDigitacao > 0){
+            System.out.flush();
+
+            // Se o jogador apertar ENTER enquanto o texto digita, o resto é exibido instantaneamente
+            if (!pular && System.in.available() > 0) {
+                pular = true;
+                // Limpa o buffer da tecla apertada
+                System.in.read(new byte[System.in.available()]);
+            }
+
+            if (!pular && velocidadeDigitacao > 0) {
+                try {
                     Thread.sleep(velocidadeDigitacao);
-                }
-            } catch(InterruptedException e){
+                } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
+                    break;
+                }
             }
         }
+        } catch (Exception e) {
+            //
+        }
         System.out.println();// pula linha ao final do texto
+
     }
 
     // Submenu para alterar as configurações
-    public static void menuConfiguracoes(Scanner scanner){
+    public static void menuConfiguracoes(Scanner scanner) {
         boolean noMenuConfig = true;
 
-        while(noMenuConfig){
+        while (noMenuConfig) {
             System.out.println("\n==================================================");
             System.out.println("            CONFIGURAÇÕES DE TEXTO               ");
             System.out.println("==================================================");
@@ -46,7 +63,7 @@ public class Configuracao{
 
             String opcao = scanner.nextLine().trim();
 
-            switch(opcao){
+            switch (opcao) {
                 case "1":
                     velocidadeDigitacao = 10;
                     digitar("Velocidade alterada para Rápida!");
@@ -74,29 +91,36 @@ public class Configuracao{
             }
         }
     }
-    private static String descreverVelocidade(){
-        switch(velocidadeDigitacao){
-            case 0: return "Instantânea";
-            case 10: return "Rápida";
-            case 30: return "Normal";
-            case 60: return "Lenta";
-            default: return velocidadeDigitacao + " ms";
+
+    private static String descreverVelocidade() {
+        switch (velocidadeDigitacao) {
+            case 0:
+                return "Instantânea";
+            case 10:
+                return "Rápida";
+            case 30:
+                return "Normal";
+            case 60:
+                return "Lenta";
+            default:
+                return velocidadeDigitacao + " ms";
         }
     }
+
     public static void limparTela() {
         try {
-            // Limpa o terminal no Windows (cmd)
+            // Limpa o terminal no windows (cmd)
             if (System.getProperty("os.name").contains("Windows")) {
-              new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             } else {
-                // Limpa o terminal no Linux e macOS
+                // Limpa o terminal no linux e macOS
                 System.out.print("\033[H\033[2J");
-                 System.out.flush();
+                System.out.flush();
             }
         } catch (Exception e) {
-            // Fallback: imprime linhas em branco caso o comando falhe em algum terminal
+            // Fallback: imprimi linhas em branco caso o comando falhe em algum terminal
             for (int i = 0; i < 50; i++) {
-            System.out.println();
+                System.out.println();
             }
         }
     }
