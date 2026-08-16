@@ -1,3 +1,4 @@
+import java.util.Map;
 import java.util.Scanner;
 
 public class GerenciadorInteracao{
@@ -7,7 +8,7 @@ public class GerenciadorInteracao{
     private static boolean gravadorComPilhas = false;
     
 
-    public static void processarUso(Jogador jogador, String itemUsar, Scanner scanner){
+    public static void processarUso(Jogador jogador, String itemUsar, Scanner scanner, Map<String, Sala> mapaSalas){
         Configuracao.limparTela();
         Sala salaAtual = jogador.pegarSalaAtual();
 
@@ -21,7 +22,7 @@ public class GerenciadorInteracao{
         }
         // 3. Ligar o Gerador
         else if (itemUsar.contains("gerador") || itemUsar.contains("interruptor")) {
-            usarGerador(salaAtual);
+            usarGerador(salaAtual, mapaSalas);
         } 
         // 4. Colocar Pilhas no Gravador
         else if (itemUsar.contains("pilha") || itemUsar.contains("pilhas")) {
@@ -82,13 +83,35 @@ public class GerenciadorInteracao{
 
     // 5. Chave do Guarda-Roupa (Usada dentro do Quarto do Morador)
     if (jogador.possuiItem("Chave do Guarda-Roupa") && salaAtual.pegarNome().equalsIgnoreCase("Quarto Morador")) {
-        Item guardaRoupa = salaAtual.pegarItemPresente();
-        if (guardaRoupa != null && guardaRoupa.pegarNome().equalsIgnoreCase("Guarda-Roupa Grande")) {
-            Configuracao.digitar("Destranco o Guarda-Roupa Grande com a chave simples. As portas se abrem devagar...");
-            // Se o guarda-roupa tiver um item escondido (como o esqueleto), ele fica acessível
-            return;
+            Item guardaRoupa = null;
+
+            // Procura o Guarda-Roupa dentro da lista de itens da sala
+            for (Item item : salaAtual.pegarItens()) {
+                if (item.pegarNome().equalsIgnoreCase("Guarda-Roupa Grande") || 
+                    item.pegarNome().toLowerCase().contains("guarda-roupa")) {
+                    guardaRoupa = item;
+                    break;
+                }
+            }
+
+            if (guardaRoupa != null) {
+                if (guardaRoupa.estaTrancado()) {
+                    guardaRoupa.destrancarCom("Chave do Guarda-Roupa");
+                    Configuracao.digitar("Destranco o Guarda-Roupa Grande com a chave simples. As portas se abrem devagar...");
+                    
+                    // Se houver um item escondido nele, move para a sala
+                    if (guardaRoupa.temItemEscondido()) {
+                        Item escondido = guardaRoupa.pegarItemEscondido();
+                        salaAtual.conjuntoItemPresente(escondido);
+                        guardaRoupa.esconderItem(null);
+                        Configuracao.digitar("[!] Encontro algo dentro do guarda-roupa: " + escondido.pegarNome());
+                    }
+                } else {
+                    Configuracao.digitar("O Guarda-Roupa Grande já está destrancado.");
+                }
+                return;
+            }
         }
-    }
 
     // Caso o jogador tente usar uma chave na sala errada ou sem porta trancada por perto
     Configuracao.digitar("Nenhuma das chaves no seu inventário parece servir para a fechadura mais próxima aqui.");
@@ -106,12 +129,18 @@ public class GerenciadorInteracao{
             Configuracao.digitar("Não há onde usar gasolina neste local.");
         }
     }
-    private static void usarGerador(Sala salaAtual) {
+    private static void usarGerador(Sala salaAtual, Map<String, Sala> mapaSalas) {
         if (salaAtual.pegarNome().equalsIgnoreCase("Porão")) {
             if (geradorComCombustivel) {
                 geradorLigado = true;
                 Configuracao.digitar("VRUMMM! O gerador ganha vida rugindo alto e iluminando o painel de energia!");
                 Configuracao.digitar("[!] O circuito elétrico da casa foi reestabelecido!");
+            
+                Sala salaSecreta = mapaSalas.get("Sala Secreta");
+                    if (salaSecreta != null) {
+                        salaSecreta.destrancarCom("Mecanismo Elétrico");
+                        Configuracao.digitar("[!] Um estalo metálico ecoa em algum lugar no andar superior...");
+                    }
             } else {
                 Configuracao.digitar("O gerador tenta dar partida, mas o tanque está totalmente vazio!");
             }
@@ -143,8 +172,8 @@ public class GerenciadorInteracao{
         if ((entradaAlvo.contains("1") || entradaAlvo.contains("porque?")|| entradaAlvo.contains("fita")) && jogador.possuiItem("Fita Cassete #01")) {
             tocarAudio("FITA CASSETE #01", 
             "\"até ontem estava tudo bem, parecia perfeito demais, calma, diversão, brincadeiras...\n"+
-            "guiando os alunos do acampamento por uma trilha tranquila...\n"+
-            "porque ela estava lá (sua voz soava seria)... se eu pudesse mudar alguma coisa (um tom de arrependimento)...\n"+
+            "guiando os alunos do acampamento por uma trilha tranquila...porque ela estava lá?\n"+
+            "(sua voz soava seria)... se eu pudesse mudar alguma coisa (um tom de arrependimento)...\n"+
             " naquele momento. Talvez... ela estivesse viva hoje, minha pequena (sua voz termina melancolica)\""
             );
         } 
@@ -170,7 +199,8 @@ public class GerenciadorInteracao{
             "com essas ameaças cheias de medo, ele já tirou de mim, o que eu tinha de mais precioso na vida...\n"+
             "não dá para traze-la de volta, mas ainda continuo tendo pesadelos daquele dia...se o denuncio à polícia,\n"+
             "ele ira me matar antes de ser preso, se o mato me tornarei o assassino que me acusaram ser.\n"+
-            "tenho que ficar preparado para uma invasão iminente, mesmo não tendo pelo que lutar, farei o possível para não perder de propósito... seja o que Deus quiser\"");
+            "tenho que ficar preparado para uma invasão iminente, mesmo não tendo pelo que lutar,"+ 
+            "farei o possível para não perder de propósito... seja o que Deus quiser\"");
         }
         else {
             Configuracao.digitar("Você não possui a fita indicada no seu inventário.");
