@@ -59,7 +59,7 @@ public class Main {
     }
 
     private static void exibirAguardar() {
-        System.out.println("\n<< WAIT >>");
+        System.out.print("\n<< WAIT >>");
     }
 
     private static void exibirIntroducaoEEntrar(Jogador jogador) {
@@ -84,6 +84,7 @@ public class Main {
         System.out.println("PRESSIONE ENTER PARA CONTINUAR");
         System.out.println("--------------------------------------------------");
         exibirAguardar();
+        scanner.nextLine();
 
         // Entrada Automática
         Sala salaEstar = mapaSalas.get("Sala de Estar");
@@ -102,6 +103,7 @@ public class Main {
         System.out.println("PRESSIONE ENTER PARA COMEÇAR A INVESTIGAR");
         System.out.println("--------------------------------------------------");
         exibirAguardar();
+        scanner.nextLine();
     }
 
     public static void verificarEExibirFinal(Jogador jogador) {
