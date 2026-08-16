@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -6,7 +8,7 @@ public class Sala{
     private String nome;
     private String descricao;
     private Map<String, Sala> saidas; // Conecta a direção ("norte","sul", etc.) com outra Sala
-    private Item itemPresente; // Nome do item/documento que está na sala ->  Agora usa a classe Item em vez de String!
+    private List<Item> itensNaSala; // Alterado de Item único para Lista
     private boolean trancada = false;
     private String chaveNecessaria = "";
 
@@ -15,7 +17,7 @@ public class Sala{
         this.nome = nome;
         this.descricao = descricao;
         this.saidas = new HashMap<>();
-        this.itemPresente = null;
+        this.itensNaSala = new ArrayList<>();
     }
     public boolean estaTrancada(){
         return trancada;
@@ -45,10 +47,20 @@ public class Sala{
     public String pegarDescricao(){
         return descricao;
     }
-    public Item pegarItemPresente(){
-        return itemPresente;
+    // Adiciona um item à lista da sala
+    public void conjuntoItemPresente(Item item) {
+        if (item != null) {
+            this.itensNaSala.add(item);
+        }
     }
-    public void conjuntoItemPresente(Item itemPresente){
-        this.itemPresente = itemPresente;
+
+    // Remove um item da lista da sala
+    public void removerItem(Item item) {
+        this.itensNaSala.remove(item);
+    }
+
+    // Retorna a lista completa de itens da sala
+    public List<Item> pegarItens() {
+        return itensNaSala;
     }
 }
