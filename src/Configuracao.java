@@ -14,20 +14,27 @@ public class Configuracao {
 
     // Método responsavel por imprimir texto letra por letra
     public static void digitar(String texto) {
-        boolean pular = false;
-    try {
+        AtomicBoolean pular = new AtomicBoolean(false);
+
+        // Thread para monitorar se o jogador pressionou ENTER
+        Thread escutador = new Thread(() -> {
+            try {
+                if (System.in.available() > 0 || System.in.read() != -1) {
+                    pular.set(true);
+                }
+            } catch (Exception e) {
+                // Ignora exceções de leitura de stream
+            }
+        });
+
+        escutador.setDaemon(true); // Encerra se a aplicação principal fechar
+        escutador.start();
+
         for (char letra : texto.toCharArray()) {
             System.out.print(letra);
             System.out.flush();
 
-            // Se o jogador apertar ENTER enquanto o texto digita, o resto é exibido instantaneamente
-            if (!pular && System.in.available() > 0) {
-                pular = true;
-                // Limpa o buffer da tecla apertada
-                System.in.read(new byte[System.in.available()]);
-            }
-
-            if (!pular && velocidadeDigitacao > 0) {
+            if (!pular.get() && velocidadeDigitacao > 0) {
                 try {
                     Thread.sleep(velocidadeDigitacao);
                 } catch (InterruptedException e) {
@@ -35,9 +42,6 @@ public class Configuracao {
                     break;
                 }
             }
-        }
-        } catch (Exception e) {
-            //
         }
         System.out.println();// pula linha ao final do texto
 
