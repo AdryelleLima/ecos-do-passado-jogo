@@ -63,7 +63,7 @@ public class GerenciadorMundo {
                         "\n" +
                         "\n" +
                         " \"");
-        Sala quartoInfantil = new Sala("Quarto Infantil",
+        Sala quarto = new Sala("Quarto",
                 "\"\n" +
                         "\n" +
                         "\n" +
@@ -97,12 +97,12 @@ public class GerenciadorMundo {
         conectar(porao, salaJantar, "subir", "subir escada");
 
         conectar(hall, quartoMorador, "leste", "quarto do morador", "quarto morador", "quarto grande");
-        conectar(hall, quartoInfantil, "nordeste", "quarto", "quarto pequeno");
+        conectar(hall, quarto, "nordeste", "quarto", "quarto pequeno");
         conectar(hall, escritorio, "norte", "escritorio");
         conectar(hall, salaJantar, "descer escada", "descer");
 
         conectar(quartoMorador, hall, "sul", "hall", "corredor");
-        conectar(quartoInfantil, hall, "sul", "corredor", "hall");
+        conectar(quarto, hall, "sul", "corredor", "hall");
         conectar(escritorio, hall, "sul", "corredor", "hall");
         conectar(escritorio, salaSecreta, "leste", "sala secreta", "secreta");
         conectar(salaSecreta, escritorio, "sul", "corredor", "hall");
@@ -119,7 +119,7 @@ public class GerenciadorMundo {
 
         mapaSalas.put("Hall", hall);
         mapaSalas.put("Quarto do Morador", quartoMorador);
-        mapaSalas.put("Quarto", quartoInfantil);
+        mapaSalas.put("Quarto", quarto);
         mapaSalas.put("Escritorio", escritorio);
         mapaSalas.put("Sala Secreta", salaSecreta);
 
@@ -331,16 +331,16 @@ public class GerenciadorMundo {
         escritorio.conjuntoItemPresente(estanteFalsa);
         escritorio.conjuntoItemPresente(escrivaninha);
 
-        quartoInfantil.conjuntoItemPresente(camaSolteiro);
-        quartoInfantil.conjuntoItemPresente(caixasPapelao);
-        quartoInfantil.conjuntoItemPresente(guardaRoupaPequeno);
-        quartoInfantil.conjuntoItemPresente(mesaCabeceira);
+        quarto.conjuntoItemPresente(camaSolteiro);
+        quarto.conjuntoItemPresente(caixasPapelao);
+        quarto.conjuntoItemPresente(guardaRoupaPequeno);
+        quarto.conjuntoItemPresente(mesaCabeceira);
 
         salaSecreta.conjuntoItemPresente(quadroDetetive);
         salaSecreta.conjuntoItemPresente(mesaInvestigativa);
 
         porao.trancar("Chave do Porão");
-        quartoInfantil.trancar("Chave do Quarto");
+        quarto.trancar("Chave do Quarto");
         quartoMorador.trancar("Chave do Quarto do Morador");
         escritorio.trancar("Chave do Escritorio");
         guardaRoupaGrande.trancar("Chave do Guarda-Roupa");
