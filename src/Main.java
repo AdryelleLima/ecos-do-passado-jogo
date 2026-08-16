@@ -175,7 +175,7 @@ public class Main {
         escritorio.definirSala("secreta", salaSecreta);
 
         // Guardando salas no mapa do jogo
-        mapaSalas.put("Sacada da Casa", sacada);
+        mapaSalas.put("Sacada", sacada);
 
         mapaSalas.put("Sala de Estar", salaEstar);
         mapaSalas.put("Sala de Jantar", salaJantar);
@@ -595,7 +595,6 @@ public class Main {
         String ultimaNotificacao = "";
 
         while (jogando) {
-            Configuracao.limparTela();
             Sala salaAtual = jogador.pegarSalaAtual();
 
             // Cabeçalho superior
@@ -605,7 +604,6 @@ public class Main {
 
             // Descrição do ambiente atual
             Configuracao.digitar(salaAtual.pegarDescricao());
-            
             System.out.println();
             if (!salaAtual.pegarItens().isEmpty()) {
                 System.out.print("No local observo: ");
@@ -616,14 +614,11 @@ public class Main {
             } else {
                 System.out.println("Não há nada de relevante para examinar aqui.");
             }
-            
-            System.out.println("--------------------------------------------------");
 
             // Painel de Notificação (Só aparece se houver uma notificação recente)
             if (!ultimaNotificacao.isEmpty()) {
                 System.out.println("\n------------------------------------------------------------------");
                 Configuracao.digitar(ultimaNotificacao);
-                System.out.println("------------------------------------------------------------------");
                 ultimaNotificacao = ""; // Limpa para a próxima rodada
             }
             System.out.println("\n--------------------------------------------------");
@@ -698,14 +693,21 @@ public class Main {
                     break;
 
                 case "EXAMINAR":
-                    Item itemAlvo = jogador.buscarItemNoInventario(alvo);
+                    // Normaliza textos para ignorar acentos e maiúsculas/minúsculas
+                    String alvoNormal = java.text.Normalizer.normalize(alvo, java.text.Normalizer.Form.NFD)
+                            .replaceAll("\\p{M}", "")
+                            .toLowerCase();
 
-                    // Se não encontrou no inventário, busca nos itens da sala atual
+                    Item itemAlvo = jogador.buscarItemNoInventario(alvoNormal);
+
                     if (itemAlvo == null) {
                         for (Item item : salaAtual.pegarItens()) {
-                            // Verifica se o nome do item contém a palavra digitada pelo jogador
-                            if (item.pegarNome().equalsIgnoreCase(alvo) ||
-                                    item.pegarNome().toLowerCase().contains(alvo.toLowerCase())) {
+                            String nomeItemNormal = java.text.Normalizer
+                                    .normalize(item.pegarNome(), java.text.Normalizer.Form.NFD)
+                                    .replaceAll("\\p{M}", "")
+                                    .toLowerCase();
+
+                            if (nomeItemNormal.contains(alvoNormal) || alvoNormal.contains(nomeItemNormal)) {
                                 itemAlvo = item;
                                 break;
                             }
@@ -713,36 +715,36 @@ public class Main {
                     }
 
                     if (itemAlvo != null) {
-                        // Exibe a descrição apenas UMA vez no topo
-                        Configuracao.digitar(itemAlvo.pegarDescricao());
+                        StringBuilder resposta = new StringBuilder();
+                        resposta.append(itemAlvo.pegarDescricao());
 
-                        // Se o móvel estiver trancado
                         if (itemAlvo.estaTrancado()) {
-                            Configuracao.digitar("\n[!] O objeto está trancado. Preciso da "
-                                    + itemAlvo.pegarChaveNecessaria() + " para abri-lo.");
+                            resposta.append("\n[!] O objeto está trancado. Preciso da ")
+                                    .append(itemAlvo.pegarChaveNecessaria()).append(" para abri-lo.");
                         } else {
-                            // Se tiver documento/texto para ler
                             if (itemAlvo.eTextoLendo()) {
-                                System.out.println("\n--- CONTEÚDO DO DOCUMENTO ---");
-                                Configuracao.digitar(itemAlvo.pegarConteudoTexto());
-                                System.out.println("-----------------------------");
+                                resposta.append("\n--- CONTEÚDO DO DOCUMENTO ---\n")
+                                        .append(itemAlvo.pegarConteudoTexto())
+                                        .append("\n-----------------------------");
                             }
 
-                            // Se for um móvel com item escondido
                             if (itemAlvo.temItemEscondido()) {
                                 Item encontrado = itemAlvo.pegarItemEscondido();
-                                Configuracao.digitar(
-                                        "\n[!] Procurando melhor, encontro: " + encontrado.pegarNome() + "!");
+                                resposta.append("\n[!] Procurando melhor, encontro: ")
+                                        .append(encontrado.pegarNome()).append("!");
+
+                                // Adiciona o item escondido na sala para poder ser pego com o comando 'pegar'
                                 salaAtual.conjuntoItemPresente(encontrado);
-                                itemAlvo.esconderItem(null); // Esvazia o móvel
+                                itemAlvo.esconderItem(null); // Esvazia o recipiente
                             }
                         }
-                    } else {
-                        Configuracao.digitar("Eu não vejo esse objeto aqui.");
-                    }
 
-                    System.out.println("\n[ Pressione ENTER para continuar... ]");
-                    scanner.nextLine();
+                        // Guarda a resposta para ser exibida no painel de notificação da próxima tela
+                        ultimaNotificacao = resposta.toString();
+
+                    } else {
+                        ultimaNotificacao = "Eu não vejo esse objeto aqui.";
+                    }
                     break;
 
                 case "PEGAR":
