@@ -64,12 +64,12 @@ public class GerenciadorInteracao {
         }
 
         // 2. Chave do Quarto de Visita / Infantil (Usada no Hall)
-        if (jogador.possuiItem("Chave do Quarto de Visita")) {
-            Sala quartoInfantil = salaAtual.pegarSaida("nordeste");
-            if (salaAtual.pegarNome().equalsIgnoreCase("Hall") && quartoInfantil != null
-                    && quartoInfantil.estaTrancada()) {
-                quartoInfantil.destrancarCom("Chave do Quarto de Visita");
-                Configuracao.digitar("Giro a chave dourada na fechadura do Quarto Infantil. A porta range e se abre!");
+        if (jogador.possuiItem("Chave do Quarto")) {
+            Sala quarto = salaAtual.pegarSaida("nordeste");
+            if (salaAtual.pegarNome().equalsIgnoreCase("Hall") && quarto != null
+                    && quarto.estaTrancada()) {
+                quarto.destrancarCom("Chave do Quarto");
+                Configuracao.digitar("Giro a chave dourada na fechadura do Quarto. A porta range e se abre!");
                 return;
             }
         }
