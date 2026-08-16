@@ -605,6 +605,18 @@ public class Main {
 
             // Descrição do ambiente atual
             Configuracao.digitar(salaAtual.pegarDescricao());
+            
+            System.out.println();
+            if (!salaAtual.pegarItens().isEmpty()) {
+                System.out.print("No local observo: ");
+                for (int i = 0; i < salaAtual.pegarItens().size(); i++) {
+                    Item it = salaAtual.pegarItens().get(i);
+                    System.out.print(it.pegarNome() + (i < salaAtual.pegarItens().size() - 1 ? ", " : ".\n"));
+                }
+            } else {
+                System.out.println("Não há nada de relevante para examinar aqui.");
+            }
+            
             System.out.println("--------------------------------------------------");
 
             // Painel de Notificação (Só aparece se houver uma notificação recente)
