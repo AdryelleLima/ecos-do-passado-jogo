@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Configuracao {
     // velocidade em milissegundos por caractere (padrão: 30ms)
@@ -14,20 +15,29 @@ public class Configuracao {
 
     // Método responsavel por imprimir texto letra por letra
     public static void digitar(String texto) {
+        if (velocidadeDigitacao <= 0) {
+            System.out.println(texto);
+            return;
+        }
+
         AtomicBoolean pular = new AtomicBoolean(false);
 
-        // Thread para monitorar se o jogador pressionou ENTER
+        // Thread para monitorar se o jogador pressionou uma tecla sem engolir os caracteres do buffer
         Thread escutador = new Thread(() -> {
             try {
-                if (System.in.available() > 0 || System.in.read() != -1) {
-                    pular.set(true);
+                while (!pular.get()) {
+                    if (System.in.available() > 0) {
+                        pular.set(true);
+                        break;
+                    }
+                    Thread.sleep(10);
                 }
             } catch (Exception e) {
                 // Ignora exceções de leitura de stream
             }
         });
 
-        escutador.setDaemon(true); // Encerra se a aplicação principal fechar
+        escutador.setDaemon(true);
         escutador.start();
 
         for (char letra : texto.toCharArray()) {
@@ -43,10 +53,9 @@ public class Configuracao {
                 }
             }
         }
-        System.out.println();// pula linha ao final do texto
-
-    }
-
+        System.out.println(); // pula linha ao final do texto
+    } 
+    
     // Submenu para alterar as configurações
     public static void menuConfiguracoes(Scanner scanner) {
         boolean noMenuConfig = true;
