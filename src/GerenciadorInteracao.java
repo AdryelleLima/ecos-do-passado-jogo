@@ -48,6 +48,7 @@ public class GerenciadorInteracao {
 
                 sacada.destrancarCom("Chave da Porta Principal");
                 Configuracao.digitar("Giro a Chave da Porta Principal na tranca pesada. A porta se destranca!");
+                Main.verificarEExibirFinal(jogador);
                 return;
             }
         }
